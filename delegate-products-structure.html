@@ -1,0 +1,899 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Tospråklig fordypning i Delegate sine produkter, struktur og fase-1-plan, med Smokefree som eksempel.">
+  <meta name="theme-color" content="#102f28">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Delegate — produkter, struktur og eksempler</title>
+  <style>
+    :root {
+      --paper: #f8f3e9;
+      --paper-2: #efe4d2;
+      --white: #fffdf8;
+      --ink: #24372f;
+      --muted: #68756e;
+      --green: #356b51;
+      --green-dark: #102f28;
+      --green-soft: #dce9df;
+      --yellow: #f4e8b9;
+      --peach: #f3dfce;
+      --blue: #dce9ec;
+      --line: rgba(36, 55, 47, .15);
+      --shadow: 0 20px 55px rgba(55, 43, 27, .09);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font: 17px/1.65 Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    a { color: var(--green); }
+    button { font: inherit; }
+    ::selection { color: var(--ink); background: var(--yellow); }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(248, 243, 233, .94);
+      backdrop-filter: blur(16px);
+    }
+    .topbar-inner, .page { width: min(100% - 40px, 1100px); margin-inline: auto; }
+    .topbar-inner { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-weight: 800; }
+    .brand-mark { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 50%; color: var(--white); background: var(--green); font-family: Georgia, serif; }
+    .top-actions { display: flex; align-items: center; gap: 10px; }
+    .overview-link { padding: 8px 13px; border-radius: 999px; color: var(--green); background: var(--green-soft); text-decoration: none; font-size: .78rem; font-weight: 850; white-space: nowrap; }
+    .language-switch { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: var(--white); }
+    .language-switch button { min-width: 42px; border: 0; border-radius: 999px; padding: 6px 10px; color: var(--muted); background: transparent; cursor: pointer; font-size: .75rem; font-weight: 850; letter-spacing: .08em; }
+    .language-switch button[aria-pressed="true"] { color: var(--white); background: var(--green); }
+
+    .subnav { position: sticky; top: 72px; z-index: 19; border-bottom: 1px solid var(--line); background: rgba(255,253,248,.97); backdrop-filter: blur(14px); }
+    .subnav-inner { width: 100%; max-width: 1140px; margin-inline: auto; display: flex; gap: 18px; padding: 0 20px 2px; overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: var(--green-soft) transparent; -webkit-overflow-scrolling: touch; }
+    .subnav-inner::-webkit-scrollbar { height: 4px; }
+    .subnav-inner::-webkit-scrollbar-thumb { border-radius: 999px; background: var(--green-soft); }
+    .subnav a { flex: 0 0 auto; padding: 11px 0 9px; color: var(--muted); text-decoration: none; font-size: .76rem; font-weight: 800; white-space: nowrap; scroll-snap-align: start; }
+    .subnav a:hover { color: var(--green); }
+
+    section { padding: 84px 0; scroll-margin-top: 118px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2 { font-family: Georgia, "Times New Roman", serif; font-weight: 500; letter-spacing: -.035em; }
+    h1 { margin-bottom: 26px; font-size: clamp(3.2rem, 8vw, 6.6rem); line-height: .96; }
+    h2 { margin-bottom: 18px; font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.04; }
+    h3 { margin-bottom: 9px; font-size: 1.12rem; line-height: 1.35; }
+    .kicker { margin-bottom: 17px; color: var(--green); font-size: .76rem; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
+    .lead { max-width: 780px; color: #43534b; font-size: clamp(1.12rem, 2.4vw, 1.36rem); }
+    .section-intro { max-width: 760px; margin-bottom: 36px; }
+    .section-intro > p:last-child { color: var(--muted); }
+
+    .hero { min-height: 80svh; display: grid; align-items: center; color: var(--white); background: var(--green-dark); }
+    .hero .kicker { color: #bcd9c7; }
+    .hero h1 span { color: #e3d27c; }
+    .hero .lead { color: #dbe8df; }
+    .status-line { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
+    .status-pill { padding: 8px 12px; border: 1px solid rgba(255,255,255,.22); border-radius: 999px; color: #e7efe9; background: rgba(255,255,255,.07); font-size: .76rem; font-weight: 750; }
+
+    .summary { background: var(--paper-2); }
+    .north-star { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; padding: clamp(28px, 5vw, 52px); border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); box-shadow: var(--shadow); }
+    .north-star blockquote { margin: 0; font: 500 clamp(1.8rem, 4vw, 3rem)/1.2 Georgia, serif; letter-spacing: -.025em; }
+    .principles { display: grid; gap: 14px; }
+    .principle { padding: 18px; border-radius: 18px; background: var(--green-soft); }
+    .principle strong { display: block; margin-bottom: 4px; }
+    .principle span { color: var(--muted); font-size: .92rem; }
+
+    .rema { background: var(--yellow); }
+    .rema-road { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; margin-top: 30px; }
+    .rema-step { position: relative; min-height: 210px; padding: 22px; border: 1px solid rgba(36,55,47,.12); border-radius: 22px; background: var(--white); }
+    .rema-step:not(:last-child)::after { content: ""; position: absolute; z-index: 3; top: 46px; right: -20px; width: 28px; height: 14px; background: var(--green); clip-path: polygon(0 32%,70% 32%,70% 0,100% 50%,70% 100%,70% 68%,0 68%); }
+    .rema-step b { display: block; margin-bottom: 22px; color: var(--green); font-size: .78rem; letter-spacing: .08em; }
+    .rema-step p { margin: 0; color: var(--muted); font-size: .86rem; }
+    .ownership-shift { display: grid; grid-template-columns: .7fr 1.3fr; gap: 26px; align-items: center; margin-top: 22px; padding: 28px; border-radius: 24px; color: var(--white); background: var(--green-dark); }
+    .ownership-shift p { margin: 0; color: #d4e3d9; }
+    .ownership-bars { display: grid; gap: 12px; }
+    .ownership-year { display: grid; grid-template-columns: 62px 1fr; gap: 12px; align-items: center; font-size: .78rem; font-weight: 850; }
+    .bar-track { height: 25px; display: flex; overflow: hidden; border-radius: 999px; background: rgba(255,255,255,.14); }
+    .bar-external { background: #87a393; }
+    .bar-own { background: #e3d27c; }
+    .year-1 .bar-external { width: 88%; }.year-1 .bar-own { width: 12%; }
+    .year-2 .bar-external { width: 68%; }.year-2 .bar-own { width: 32%; }
+    .year-3 .bar-external { width: 48%; }.year-3 .bar-own { width: 52%; }
+    .year-5 .bar-external { width: 25%; }.year-5 .bar-own { width: 75%; }
+
+    .system-map { background: var(--white); }
+    .feedback-loop { margin-top: 18px; padding: 18px 22px; border: 1px dashed rgba(53,107,81,.35); border-radius: 18px; color: var(--green); background: var(--green-soft); font-weight: 800; text-align: center; }
+
+    .architecture-visual { position: relative; min-height: 640px; margin-top: 34px; padding: 46px; overflow: hidden; border-radius: 30px; color: var(--white); background: var(--green-dark); box-shadow: var(--shadow); }
+    .architecture-visual::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 45%, rgba(227,210,124,.18), transparent 28%), linear-gradient(135deg, rgba(255,255,255,.06), transparent 42%); }
+    .architecture-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .architecture-lines path { fill: none; stroke: #87b79a; stroke-width: 3; stroke-dasharray: 8 8; }
+    .architecture-lines circle { fill: #e3d27c; }
+    .arch-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1.15fr 1fr; grid-template-rows: auto auto; gap: 54px 42px; align-items: center; }
+    .arch-node { min-height: 190px; padding: 24px; border: 1px solid rgba(255,255,255,.18); border-radius: 24px; background: rgba(255,255,255,.08); backdrop-filter: blur(8px); }
+    .arch-node.brain { grid-row: 1 / span 2; grid-column: 2; align-self: stretch; display: grid; place-items: center; text-align: center; background: var(--green); }
+    .arch-node h3 { margin-top: 14px; font: 500 1.45rem/1.15 Georgia, serif; }
+    .arch-node p { margin: 0; color: #d4e3d9; font-size: .9rem; }
+    .arch-icon { width: 52px; height: 52px; display: grid; place-items: center; border-radius: 17px; color: var(--green-dark); background: #e3d27c; }
+    .arch-icon svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+    .brain-rings { position: relative; width: 180px; height: 180px; display: grid; place-items: center; margin: 0 auto 18px; }
+    .brain-rings::before, .brain-rings::after { content: ""; position: absolute; border: 1px solid rgba(255,255,255,.35); border-radius: 50%; }
+    .brain-rings::before { inset: 0; }
+    .brain-rings::after { inset: 22px; }
+    .brain-core { width: 96px; height: 96px; display: grid; place-items: center; border-radius: 50%; color: var(--green-dark); background: #e3d27c; font: 700 1.1rem Georgia, serif; }
+
+    .discovery { background: var(--blue); }
+    .definition-box { display: grid; grid-template-columns: .7fr 1.3fr; gap: 24px; margin-bottom: 34px; padding: 28px; border-radius: 24px; background: var(--white); }
+    .definition-box strong { font: 500 1.7rem/1.2 Georgia, serif; }
+    .definition-box p { margin: 0; color: var(--muted); }
+    .discovery-map { position: relative; min-height: 680px; overflow: hidden; border: 1px solid rgba(36,55,47,.12); border-radius: 30px; background: var(--white); }
+    .discovery-map::before { content: ""; position: absolute; inset: 10% 22%; border: 2px dashed rgba(53,107,81,.2); border-radius: 50%; }
+    .discovery-center { position: absolute; z-index: 3; top: 50%; left: 50%; width: 230px; min-height: 230px; display: grid; place-items: center; padding: 28px; transform: translate(-50%,-50%); border-radius: 50%; color: var(--white); background: var(--green-dark); text-align: center; box-shadow: 0 0 0 18px rgba(53,107,81,.1); }
+    .discovery-center strong { display: block; font: 500 1.65rem Georgia, serif; }
+    .discovery-center span { color: #cfe0d4; font-size: .84rem; }
+    .discovery-node { position: absolute; z-index: 2; width: 230px; min-height: 130px; padding: 20px; border: 1px solid var(--line); border-radius: 21px; background: var(--paper); box-shadow: 0 12px 30px rgba(36,55,47,.08); }
+    .discovery-node h3 { color: var(--green); }
+    .discovery-node p { margin: 0; color: var(--muted); font-size: .85rem; }
+    .discovery-node.n1 { top: 36px; left: 50%; transform: translateX(-50%); }
+    .discovery-node.n2 { top: 150px; right: 40px; }
+    .discovery-node.n3 { right: 90px; bottom: 55px; }
+    .discovery-node.n4 { bottom: 36px; left: 50%; transform: translateX(-50%); }
+    .discovery-node.n5 { bottom: 55px; left: 90px; }
+    .discovery-node.n6 { top: 150px; left: 40px; }
+    .discovery-spokes { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .discovery-spokes line { stroke: rgba(53,107,81,.42); stroke-width: 2; }
+    .discovery-output { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-top: 18px; }
+    .output-card { padding: 18px; border-radius: 18px; color: var(--white); background: var(--green); text-align: center; }
+    .output-card strong { display: block; }
+    .output-card span { color: #dbe9df; font-size: .82rem; }
+
+    .products { background: var(--green-soft); }
+    .product-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
+    .product-card { padding: 28px; border: 1px solid rgba(36,55,47,.11); border-radius: var(--radius); background: var(--white); box-shadow: var(--shadow); }
+    .product-number { width: 44px; height: 44px; display: grid; place-items: center; margin-bottom: 36px; border-radius: 14px; color: var(--white); background: var(--green); font: 700 1.1rem Georgia, serif; }
+    .product-card h3 { font: 500 1.7rem/1.15 Georgia, serif; letter-spacing: -.02em; }
+    .product-card p { color: var(--muted); }
+    .status { display: inline-block; margin-top: 16px; padding: 6px 9px; border-radius: 999px; color: var(--green); background: var(--green-soft); font-size: .7rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .status.later { color: #7a5a21; background: var(--yellow); }
+    .status.open { color: #884d37; background: var(--peach); }
+    .product-detail { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+    .product-detail strong { display: block; margin-bottom: 5px; }
+    .product-detail span { color: var(--muted); font-size: .9rem; }
+    .product-visual { height: 140px; display: grid; place-items: center; margin-bottom: 24px; overflow: hidden; border-radius: 18px; background: var(--green-dark); }
+    .product-visual svg { width: 88%; height: 115px; }
+    .product-visual .line { fill: none; stroke: #8ebaa0; stroke-width: 2.4; }
+    .product-visual .node { fill: #f4e8b9; stroke: none; }
+    .product-visual .soft { fill: #dce9df; stroke: none; }
+    .product-visual text { fill: #102f28; font: 700 10px Inter, sans-serif; text-anchor: middle; }
+    .product-visual .light-text { fill: #fffdf8; }
+
+    .connect-workbench { margin-top: 28px; padding: 30px; border-radius: 26px; background: var(--white); box-shadow: var(--shadow); }
+    .connect-workbench > p { max-width: 800px; color: var(--muted); }
+    .connector-visual { position: relative; display: grid; grid-template-columns: 1fr .72fr 1fr; gap: 18px; margin-top: 26px; padding: 24px; border: 1px solid var(--line); border-radius: 24px; background: var(--paper); }
+    .connector-request, .connector-decision, .connector-path, .business-graph { position: relative; z-index: 2; padding: 22px; border-radius: 20px; background: var(--white); }
+    .connector-request { grid-column: 1 / -1; display: grid; grid-template-columns: 70px 1fr; gap: 18px; align-items: center; }
+    .connector-request .arch-icon { color: var(--white); background: var(--green); }
+    .connector-request p, .connector-path p, .business-graph p { margin: 0; color: var(--muted); font-size: .88rem; }
+    .connector-decision { display: grid; place-items: center; min-height: 190px; text-align: center; background: var(--yellow); clip-path: polygon(50% 0,100% 50%,50% 100%,0 50%); }
+    .connector-decision strong { max-width: 130px; }
+    .connector-path { min-height: 190px; border-top: 6px solid var(--green); }
+    .connector-path.builder { border-color: #c87854; }
+    .connector-path ol { margin: 12px 0 0; padding-left: 20px; color: var(--muted); font-size: .82rem; }
+    .connector-path.existing { grid-column: 1; grid-row: 2; }
+    .connector-decision { grid-column: 2; grid-row: 2; }
+    .connector-path.builder { grid-column: 3; grid-row: 2; }
+    .business-graph { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1.4fr; gap: 20px; align-items: center; color: var(--white); background: var(--green-dark); }
+    .business-graph p { color: #d4e3d9; }
+    .entity-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+    .entity-cloud span { padding: 7px 10px; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; color: var(--green-dark); background: #dce9df; font-size: .76rem; font-weight: 800; }
+
+    .applications { background: var(--paper); }
+    .app-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+    .app-card { padding: 24px; border: 1px solid var(--line); border-radius: 20px; background: var(--white); }
+    .app-card h3 { font-family: Georgia, serif; font-size: 1.35rem; }
+    .app-card p { margin-bottom: 16px; color: var(--muted); font-size: .92rem; }
+    .app-tag { color: var(--green); font-size: .7rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .mini-flow { display: flex; align-items: center; gap: 6px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+    .mini-flow span { flex: 1; padding: 7px 5px; border-radius: 9px; color: var(--green-dark); background: var(--green-soft); font-size: .66rem; font-weight: 850; text-align: center; }
+    .mini-flow i { color: var(--green); font-style: normal; font-weight: 900; }
+
+    .agents { color: var(--white); background: var(--green-dark); }
+    .agents .kicker { color: #bddac8; }
+    .agents .section-intro > p:last-child { color: #cfe0d4; }
+    .agent-map { position: relative; min-height: 720px; margin-top: 28px; border: 1px solid rgba(255,255,255,.15); border-radius: 30px; background: radial-gradient(circle at center, rgba(227,210,124,.16), transparent 30%), rgba(255,255,255,.03); }
+    .agent-map svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .agent-map line { stroke: rgba(142,186,160,.55); stroke-width: 2; }
+    .agent-core { position: absolute; z-index: 2; top: 50%; left: 50%; width: 220px; height: 220px; display: grid; place-items: center; padding: 25px; transform: translate(-50%,-50%); border-radius: 50%; color: var(--green-dark); background: #e3d27c; text-align: center; }
+    .agent-core strong { font: 500 1.5rem Georgia,serif; }
+    .agent-node { position: absolute; z-index: 3; width: 205px; min-height: 135px; padding: 18px; border: 1px solid rgba(255,255,255,.17); border-radius: 20px; background: #21483c; }
+    .agent-node b { display: block; margin-bottom: 6px; color: #e3d27c; }
+    .agent-node span { color: #d8e6dd; font-size: .8rem; }
+    .agent-node.a1 { top: 35px; left: 50%; transform: translateX(-50%); }
+    .agent-node.a2 { top: 150px; right: 45px; }.agent-node.a3 { right: 85px; bottom: 60px; }
+    .agent-node.a4 { bottom: 35px; left: 50%; transform: translateX(-50%); }
+    .agent-node.a5 { bottom: 60px; left: 85px; }.agent-node.a6 { top: 150px; left: 45px; }
+    .agent-rule { margin-top: 20px; padding: 20px 24px; border-left: 5px solid #e3d27c; background: rgba(255,255,255,.07); }
+
+    .loops { background: var(--blue); }
+    .loop-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .loop-card { padding: 26px; border-radius: 24px; background: var(--white); }
+    .loop-ring { position: relative; width: 180px; height: 180px; display: grid; place-items: center; margin: 0 auto 24px; border: 18px solid var(--green-soft); border-top-color: var(--green); border-right-color: #e3d27c; border-radius: 50%; }
+    .loop-ring::after { content: ""; position: absolute; top: 4px; right: 12px; border: 9px solid transparent; border-left-color: #e3d27c; transform: rotate(18deg); }
+    .loop-ring strong { width: 115px; text-align: center; font: 500 1rem/1.2 Georgia,serif; }
+    .loop-card p { color: var(--muted); }
+    .loop-card ol { margin: 0; padding-left: 20px; color: var(--muted); font-size: .86rem; }
+    .loop-join { margin-top: 20px; padding: 22px; border-radius: 20px; color: var(--white); background: var(--green); text-align: center; }
+
+    .smokefree { background: var(--peach); }
+    .case-head { display: grid; grid-template-columns: .8fr 1.2fr; gap: 24px; align-items: start; }
+    .case-badge { padding: 24px; border-radius: 22px; color: var(--white); background: var(--green-dark); }
+    .case-badge strong { display: block; font: 500 2rem Georgia, serif; }
+    .case-badge span { color: #cfe0d4; }
+    .case-note { padding: 22px; border-left: 4px solid var(--green); background: rgba(255,253,248,.68); }
+    .case-note p { margin: 0; }
+    .journey { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 10px; margin-top: 34px; }
+    .journey-step { position: relative; min-height: 170px; padding: 20px 16px; border: 1px solid var(--line); border-radius: 18px; background: var(--white); }
+    .journey-step:not(:last-child)::after { content: "→"; position: absolute; z-index: 2; top: 28px; right: -17px; width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; color: var(--white); background: var(--green); font-size: .78rem; }
+    .journey-step small { display: block; margin-bottom: 22px; color: var(--green); font-weight: 900; }
+    .journey-step p { margin: 0; color: var(--muted); font-size: .86rem; }
+    .case-story { margin-top: 32px; padding: 30px; border-radius: 26px; background: rgba(255,253,248,.8); }
+    .story-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 14px; margin-top: 22px; }
+    .story-scene { position: relative; min-height: 220px; padding: 20px; border: 1px solid var(--line); border-radius: 20px; background: var(--white); }
+    .story-scene:not(:last-child)::after { content: ""; position: absolute; z-index: 4; top: 47px; right: -22px; width: 29px; height: 12px; background: linear-gradient(90deg,var(--green) 0 70%,transparent 70%); clip-path: polygon(0 30%,70% 30%,70% 0,100% 50%,70% 100%,70% 70%,0 70%); }
+    .scene-visual { height: 88px; display: grid; place-items: center; margin-bottom: 18px; border-radius: 16px; color: var(--green); background: var(--green-soft); }
+    .scene-visual svg { width: 54px; height: 54px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+    .story-scene small { color: var(--green); font-weight: 900; letter-spacing: .08em; }
+    .story-scene h3 { margin-top: 6px; }
+    .story-scene p { margin: 0; color: var(--muted); font-size: .84rem; }
+    .case-split { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px; }
+    .case-person { padding: 24px; border-radius: 22px; background: var(--white); }
+    .case-person.sasa { border-top: 7px solid #c87854; }
+    .case-person.wax { border-top: 7px solid var(--green); }
+    .person-label { display: inline-block; margin-bottom: 14px; padding: 5px 9px; border-radius: 999px; color: var(--white); background: var(--green-dark); font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .case-person ul { margin-bottom: 0; padding-left: 19px; color: var(--muted); }
+
+    .learning { background: var(--green-dark); color: var(--white); }
+    .learning .kicker { color: #bddac8; }
+    .learning .section-intro > p:last-child { color: #cfe0d4; }
+    .learning-wheel { position: relative; min-height: 720px; margin-top: 28px; border: 1px solid rgba(255,255,255,.15); border-radius: 32px; background: radial-gradient(circle at center, rgba(227,210,124,.17), transparent 34%), rgba(255,255,255,.035); }
+    .wheel-track { position: absolute; top: 50%; left: 50%; width: 390px; height: 390px; transform: translate(-50%,-50%); border: 3px solid rgba(135,183,154,.55); border-right-color: #e3d27c; border-radius: 50%; }
+    .wheel-track::after { content: ""; position: absolute; right: 6px; bottom: 72px; border: 12px solid transparent; border-left-color: #e3d27c; transform: rotate(38deg); }
+    .wheel-core { position: absolute; z-index: 2; top: 50%; left: 50%; width: 210px; height: 210px; display: grid; place-items: center; padding: 24px; transform: translate(-50%,-50%); border-radius: 50%; color: var(--green-dark); background: #e3d27c; text-align: center; }
+    .wheel-core strong { font: 500 1.55rem Georgia,serif; }
+    .wheel-step { position: absolute; z-index: 3; width: 180px; min-height: 125px; padding: 18px; border: 1px solid rgba(255,255,255,.18); border-radius: 20px; background: #21483c; box-shadow: 0 18px 45px rgba(0,0,0,.18); }
+    .wheel-step b { display: block; margin-bottom: 5px; color: #e3d27c; }
+    .wheel-step span { color: #d8e6dd; font-size: .82rem; }
+    .wheel-step.w1 { top: 38px; left: 50%; transform: translateX(-50%); }
+    .wheel-step.w2 { top: 145px; right: 55px; }
+    .wheel-step.w3 { right: 70px; bottom: 78px; }
+    .wheel-step.w4 { bottom: 38px; left: 50%; transform: translateX(-50%); }
+    .wheel-step.w5 { bottom: 78px; left: 70px; }
+    .wheel-step.w6 { top: 145px; left: 55px; }
+    .learning-tracks { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 22px; }
+    .learning-track { padding: 26px; border: 1px solid rgba(255,255,255,.14); border-radius: 24px; background: rgba(255,255,255,.06); }
+    .learning-track h3 { font: 500 1.55rem Georgia,serif; }
+    .learning-track p { color: #d5e4da; }
+    .lesson-chain { display: flex; flex-wrap: wrap; gap: 8px; }
+    .lesson-chain span { padding: 7px 10px; border-radius: 999px; color: var(--green-dark); background: #dce9df; font-size: .76rem; font-weight: 800; }
+    .learning-rule { margin-top: 22px; padding: 20px 24px; border-left: 5px solid #e3d27c; color: #e9f1ec; background: rgba(255,255,255,.07); }
+
+    .organisation { background: var(--yellow); }
+    .org-top { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+    .org-card { padding: 26px; border: 1px solid rgba(36,55,47,.11); border-radius: 22px; background: rgba(255,253,248,.84); }
+    .org-card .initials { width: 46px; height: 46px; display: grid; place-items: center; margin-bottom: 28px; border-radius: 14px; color: var(--white); background: var(--green); font-family: Georgia, serif; }
+    .org-card p { color: var(--muted); }
+    .org-card ul { padding-left: 20px; }
+    .team-bridge { margin: 18px auto; width: 2px; height: 42px; background: var(--green); }
+    .operators { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 730px; margin-inline: auto; }
+    .validation-note { margin-top: 28px; padding: 18px 22px; border-radius: 18px; background: rgba(255,253,248,.7); text-align: center; }
+
+    .records { background: var(--white); }
+    .record-stack { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+    .record { padding: 22px 16px; border-radius: 19px; border: 1px solid var(--line); background: var(--paper); text-align: center; }
+    .record.canonical { color: var(--white); background: var(--green); }
+    .record strong { display: block; margin-bottom: 7px; }
+    .record span { color: var(--muted); font-size: .83rem; }
+    .record.canonical span { color: #dbe9df; }
+    .record-rule { margin-top: 25px; padding: 20px 24px; border-left: 4px solid var(--green); background: var(--green-soft); }
+
+    .workplans { background: var(--green-soft); }
+    .workplan-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .workplan-card { display: flex; flex-direction: column; min-height: 310px; padding: 28px; border-radius: 24px; color: inherit; background: var(--white); box-shadow: var(--shadow); text-decoration: none; }
+    .workplan-card .initials { width: 52px; height: 52px; display: grid; place-items: center; margin-bottom: 28px; border-radius: 16px; color: var(--white); background: var(--green); font: 700 1rem Georgia,serif; }
+    .workplan-card h3 { font: 500 1.6rem Georgia,serif; }
+    .workplan-card p { color: var(--muted); }
+    .workplan-card strong { margin-top: auto; color: var(--green); }
+    .sync-note { margin-top: 20px; padding: 18px 22px; border-left: 4px solid #c87854; background: var(--white); }
+
+    .roadmap { background: var(--paper-2); }
+    .timeline { display: grid; gap: 0; }
+    .phase { position: relative; display: grid; grid-template-columns: 120px 1fr; gap: 25px; padding-bottom: 28px; }
+    .phase:not(:last-child)::after { content: ""; position: absolute; top: 35px; bottom: 2px; left: 58px; width: 2px; background: rgba(53,107,81,.25); }
+    .phase-state { position: relative; z-index: 1; align-self: start; padding: 8px 10px; border-radius: 999px; color: var(--green); background: var(--green-soft); font-size: .68rem; font-weight: 900; letter-spacing: .08em; text-align: center; text-transform: uppercase; }
+    .phase-state.next { color: #7a5a21; background: var(--yellow); }
+    .phase-state.later { color: #884d37; background: var(--peach); }
+    .phase-body { padding: 22px 24px; border: 1px solid var(--line); border-radius: 20px; background: var(--white); }
+    .phase-body p { margin: 0; color: var(--muted); }
+
+    .glossary { background: var(--blue); }
+    .glossary-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+    .term { padding: 22px; border: 1px solid rgba(36,55,47,.12); border-radius: 19px; background: rgba(255,253,248,.84); }
+    .term h3 { color: var(--green); }
+    .term p { margin: 0; color: var(--muted); font-size: .92rem; }
+
+    .guardrails { color: var(--white); background: var(--green-dark); }
+    .guardrails .kicker { color: #bddac8; }
+    .guardrails .section-intro > p:last-child { color: #ccddd1; }
+    .guard-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+    .guard { padding: 22px; border: 1px solid rgba(255,255,255,.16); border-radius: 19px; background: rgba(255,255,255,.06); }
+    .guard p { margin: 0; color: #d5e4da; }
+
+    footer { padding: 36px 0 48px; color: var(--muted); background: var(--paper); font-size: .86rem; }
+    footer .page { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+
+    @media (max-width: 900px) {
+      .product-grid, .app-grid, .org-top { grid-template-columns: 1fr; }
+      .journey { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .journey-step:not(:last-child)::after { display: none; }
+      .record-stack { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .glossary-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .arch-grid { grid-template-columns: 1fr 1fr; }
+      .arch-node.brain { grid-row: auto; grid-column: 1 / -1; }
+      .architecture-lines { display: none; }
+      .discovery-map { min-height: 980px; }
+      .discovery-node.n2 { top: 210px; right: 24px; }
+      .discovery-node.n3 { right: 24px; bottom: 195px; }
+      .discovery-node.n5 { bottom: 195px; left: 24px; }
+      .discovery-node.n6 { top: 210px; left: 24px; }
+      .story-grid { grid-template-columns: repeat(2,1fr); }
+      .story-scene:not(:last-child)::after { display: none; }
+      .learning-wheel { min-height: 980px; }
+      .wheel-step.w2 { right: 20px; }.wheel-step.w3 { right: 20px; bottom: 150px; }.wheel-step.w5 { left: 20px; bottom: 150px; }.wheel-step.w6 { left: 20px; }
+      .connector-visual { grid-template-columns: 1fr 1fr; }
+      .connector-path.existing, .connector-decision, .connector-path.builder { grid-column: auto; grid-row: auto; }
+      .connector-decision { display: none; }
+      .rema-road { grid-template-columns: repeat(2,1fr); }
+      .rema-step:not(:last-child)::after { display: none; }
+      .loop-grid, .workplan-grid { grid-template-columns: 1fr; }
+      .agent-map { min-height: 980px; }
+      .agent-node.a2 { right: 20px; }.agent-node.a3 { right: 20px; bottom: 155px; }.agent-node.a5 { left: 20px; bottom: 155px; }.agent-node.a6 { left: 20px; }
+    }
+    @media (max-width: 650px) {
+      .topbar-inner, .page { width: min(100% - 28px, 1100px); }
+      .subnav-inner { gap: 15px; padding-inline: 14px; }
+      .overview-link { display: none; }
+      section { padding: 62px 0; }
+      .north-star, .case-head { grid-template-columns: 1fr; }
+      .journey, .operators, .record-stack, .glossary-grid, .guard-grid { grid-template-columns: 1fr; }
+      .phase { grid-template-columns: 84px 1fr; gap: 14px; }
+      .phase:not(:last-child)::after { left: 41px; }
+      .architecture-visual { min-height: 0; padding: 22px; }
+      .arch-grid, .definition-box, .discovery-output, .story-grid, .case-split, .learning-tracks, .connector-visual, .connector-request, .business-graph, .ownership-shift, .rema-road { grid-template-columns: 1fr; }
+      .arch-node.brain { grid-column: auto; }
+      .discovery-map { min-height: 0; padding: 18px; }
+      .discovery-map::before, .discovery-spokes, .wheel-track { display: none; }
+      .discovery-center, .discovery-node, .discovery-node.n1, .discovery-node.n2, .discovery-node.n3, .discovery-node.n4, .discovery-node.n5, .discovery-node.n6 { position: static; width: auto; min-height: 0; margin-bottom: 12px; transform: none; border-radius: 20px; }
+      .discovery-center { min-height: 170px; border-radius: 50%; margin-inline: auto; width: 170px; }
+      .learning-wheel { min-height: 0; padding: 18px; }
+      .wheel-core, .wheel-step, .wheel-step.w1, .wheel-step.w2, .wheel-step.w3, .wheel-step.w4, .wheel-step.w5, .wheel-step.w6 { position: static; width: auto; min-height: 0; margin-bottom: 12px; transform: none; }
+      .wheel-core { width: 190px; height: 190px; margin: 0 auto 18px; border-radius: 50%; }
+      .agent-map { min-height: 0; padding: 18px; }
+      .agent-map svg { display: none; }
+      .agent-core, .agent-node, .agent-node.a1, .agent-node.a2, .agent-node.a3, .agent-node.a4, .agent-node.a5, .agent-node.a6 { position: static; width: auto; min-height: 0; margin-bottom: 12px; transform: none; }
+      .agent-core { width: 190px; height: 190px; margin: 0 auto 18px; }
+    }
+    @media (max-width: 420px) {
+      .brand span:last-child { display: none; }
+      .language-switch button { min-width: 38px; padding-inline: 8px; }
+      .phase { grid-template-columns: 1fr; }
+      .phase:not(:last-child)::after { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    @media print {
+      .topbar, .subnav { position: static; }
+      .language-switch { display: none; }
+      section { padding: 36px 0; break-inside: avoid; }
+      .hero { min-height: 0; color: var(--ink); background: var(--white); }
+      .hero .lead { color: var(--ink); }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top" aria-label="Delegate — til toppen">
+        <span class="brand-mark" aria-hidden="true">D</span>
+        <span>Delegate Philippines</span>
+      </a>
+      <div class="top-actions">
+        <a class="overview-link" href="delegate-blueprint-pat-janie-v2.html" data-en="← Overview">← Oversikt</a>
+        <div class="language-switch" role="group" aria-label="Velg språk">
+          <button type="button" data-language="no" aria-pressed="true">NO</button>
+          <button type="button" data-language="en" aria-pressed="false">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="subnav" aria-label="Innhold">
+    <div class="subnav-inner">
+      <a href="#rema" data-en="Ownership path">Eierskapsvei</a>
+      <a href="#system" data-en="System">System</a>
+      <a href="#discovery" data-en="Discovery">Discovery</a>
+      <a href="#products" data-en="Products">Produkter</a>
+      <a href="#agents" data-en="AI agents">AI-agenter</a>
+      <a href="#applications" data-en="Apps">Apper</a>
+      <a href="#loops" data-en="Loops">Sløyfer</a>
+      <a href="#smokefree" data-en="Smokefree">Smokefree</a>
+      <a href="#learning" data-en="Training">Opplæring</a>
+      <a href="#organisation" data-en="Team">Team</a>
+      <a href="#workplans" data-en="Tasks">Oppgaver</a>
+      <a href="#roadmap" data-en="Plan">Plan</a>
+      <a href="#glossary" data-en="Glossary">Ordliste</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero" id="top">
+      <div class="page">
+        <p class="kicker" data-en="Products, structure and practical examples">Produkter, struktur og praktiske eksempler</p>
+        <h1 data-en-html="How Delegate<br><span>works.</span>">Slik fungerer<br><span>Delegate.</span></h1>
+        <p class="lead" data-en="A deeper explanation for Jonathan, Pat and Janie: what the customer buys, how Connect, Brain, agents and people fit together, how Smokefree can become the first growth loop, and what we build first — and later.">En fordypning for Jonathan, Pat og Janie: hva kunden kjøper, hvordan Connect, Brain, agenter og mennesker henger sammen, hvordan Smokefree kan bli den første vekstsløyfen, og hva vi bygger først — og senere.</p>
+        <div class="status-line">
+          <span class="status-pill" data-en="Supabase Brain foundation: built">Supabase Brain-grunnmur: bygget</span>
+          <span class="status-pill" data-en="Nango integration layer: selected">Nango integrasjonslag: valgt</span>
+          <span class="status-pill" data-en="First customer connection: not live">Første kundetilkobling: ikke live</span>
+          <span class="status-pill" data-en="First MVP: open until discovery">Første MVP: åpen til discovery</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="summary">
+      <div class="page">
+        <div class="north-star">
+          <div>
+            <p class="kicker" data-en="The core idea">Kjerneideen</p>
+            <blockquote data-en="The customer does not buy a pile of software. The customer buys a living understanding of the business, continuous improvement and human execution when AI is not enough.">Kunden kjøper ikke en haug med programvare. Kunden kjøper en levende forståelse av virksomheten, kontinuerlig forbedring og menneskelig utførelse når AI ikke er nok.</blockquote>
+          </div>
+          <div class="principles">
+            <div class="principle"><strong>SELL / ORCHESTRATE</strong><span data-en="Use existing tools and people to solve real problems now.">Bruk eksisterende verktøy og mennesker til å løse reelle problemer nå.</span></div>
+            <div class="principle"><strong>WATCH / LEARN</strong><span data-en="Document friction, repeated work, cost and outcomes.">Dokumenter friksjon, gjentatt arbeid, kostnad og resultater.</span></div>
+            <div class="principle"><strong>BUILD INTERNALLY</strong><span data-en="Create narrow internal tools only where evidence repeats.">Bygg smale interne verktøy bare der evidensen gjentar seg.</span></div>
+            <div class="principle"><strong>OWN / REPLACE</strong><span data-en="Gradually own the parts that create durable advantage and IP.">Eie gradvis delene som gir varig fortrinn og IP.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rema" id="rema" aria-labelledby="rema-title">
+      <div class="page">
+        <div class="section-intro">
+          <p class="kicker" data-en="From tools to ownership">Fra verktøy til eierskap</p>
+          <h2 id="rema-title" data-en="Use the shelf to discover what Delegate should own.">Bruk hyllen til å oppdage hva Delegate skal eie.</h2>
+          <p data-en="The intermediary phase is temporary on purpose. Existing software, agents and people create cash flow and expose real problems. Delegate records the learning, builds narrow internal tools and gradually replaces only the layers where its own intelligence creates an advantage.">Mellommannsfasen er midlertidig med vilje. Eksisterende software, agenter og mennesker skaper inntekt og avdekker reelle problemer. Delegate lagrer læringen, bygger smale interne verktøy og erstatter gradvis bare lagene der egen intelligens gir et fortrinn.</p>
+        </div>
+        <div class="rema-road" aria-label="Delegate path from resale to ownership">
+          <article class="rema-step"><b>01 · USE / RESELL</b><h3 data-en="Fill the shelf">Fyll hyllen</h3><p data-en="Solve customer needs now with proven SaaS, AI and human work.">Løs kundebehov nå med bevist SaaS, AI og menneskelig arbeid.</p></article>
+          <article class="rema-step"><b>02 · ORCHESTRATE</b><h3 data-en="Make it work together">Få det til å virke sammen</h3><p data-en="Connect tools, permissions, people and workflows into one delivered solution.">Koble verktøy, tilganger, mennesker og arbeidsflyter til én levert løsning.</p></article>
+          <article class="rema-step"><b>03 · LEARN</b><h3 data-en="Watch the demand">Se hva som etterspørres</h3><p data-en="Record repeated pain, manual work, cost, results and missing software.">Registrer gjentatt friksjon, manuelt arbeid, kostnad, resultat og manglende software.</p></article>
+          <article class="rema-step"><b>04 · BUILD</b><h3 data-en="Create private-label tools">Bygg egne verktøy</h3><p data-en="Start with a narrow internal agent or tool — not a complete SaaS platform.">Start med en smal intern agent eller et verktøy — ikke en komplett SaaS-plattform.</p></article>
+          <article class="rema-step"><b>05 · OWN</b><h3 data-en="Own the intelligence">Eie intelligensen</h3><p data-en="Productise what repeats and creates defensible IP, data or distribution.">Produktiser det som gjentar seg og skaper forsvarbar IP, data eller distribusjon.</p></article>
+        </div>
+        <div class="ownership-shift">
+          <div><h3 data-en="The direction — not a fixed forecast">Retningen — ikke en fast prognose</h3><p data-en="Delegate does not need to replace Stripe, databases or every SaaS. It should own the decision logic, workflows and specialist tools that become more valuable with every customer and trainee.">Delegate trenger ikke erstatte Stripe, databaser eller all SaaS. Selskapet bør eie beslutningslogikken, arbeidsflytene og spesialistverktøyene som blir bedre for hver kunde og trainee.</p></div>
+          <div class="ownership-bars" aria-label="Illustrative shift from external to own software">
+            <div class="ownership-year year-1"><span>ÅR 1</span><div class="bar-track"><i class="bar-external"></i><i class="bar-own"></i></div></div>
+            <div class="ownership-year year-2"><span>ÅR 2</span><div class="bar-track"><i class="bar-external"></i><i class="bar-own"></i></div></div>
+            <div class="ownership-year year-3"><span>ÅR 3</span><div class="bar-track"><i class="bar-external"></i><i class="bar-own"></i></div></div>
+            <div class="ownership-year year-5"><span>ÅR 5</span><div class="bar-track"><i class="bar-external"></i><i class="bar-own"></i></div></div>
+          </div>
+        </div>
+        <div class="case-story" aria-label="Example of the ownership path with Smokefree, Wax and Sasa">
+          <p class="kicker" data-en="Example · from customer work to owned tool">Eksempel · fra kundearbeid til eget verktøy</p>
+          <h3 data-en="Smokefree teaches the team — the team teaches the product.">Smokefree lærer opp teamet — teamet lærer opp produktet.</h3>
+          <div class="story-grid">
+            <article class="story-scene"><div class="scene-visual"><svg viewBox="0 0 64 64"><path d="M12 46h40M17 41l8-11 9 7 13-18"/><circle cx="17" cy="41" r="3"/><circle cx="25" cy="30" r="3"/><circle cx="34" cy="37" r="3"/><circle cx="47" cy="19" r="3"/></svg></div><small>01 · NEED</small><h3 data-en="A real growth problem">Et reelt vekstproblem</h3><p data-en="Discovery identifies a repeated campaign or funnel task worth solving.">Discovery finner en gjentatt kampanje- eller funneloppgave som er verdt å løse.</p></article>
+            <article class="story-scene"><div class="scene-visual"><svg viewBox="0 0 64 64"><circle cx="22" cy="24" r="8"/><circle cx="43" cy="24" r="8"/><path d="M9 50c1-10 7-15 13-15s12 5 13 15M30 50c1-10 7-15 13-15s12 5 13 15"/></svg></div><small>02 · LEARN</small><h3>Wax + Sasa</h3><p data-en="AI Tutor gives task-specific practice; they perform under human review.">AI Tutor gir oppgavespesifikk øving; de utfører under menneskelig kontroll.</p></article>
+            <article class="story-scene"><div class="scene-visual"><svg viewBox="0 0 64 64"><path d="M13 15h38v34H13zM19 23h26M19 31h18M19 39h22"/><path d="M43 45l5 5 8-10"/></svg></div><small>03 · SYSTEMISE</small><h3 data-en="Capture the method">Fang metoden</h3><p data-en="The brief, SOP, QA rubric, time and outcome become Delegate knowledge.">Brief, SOP, QA-rubrikk, tid og resultat blir Delegate-kunnskap.</p></article>
+            <article class="story-scene"><div class="scene-visual"><svg viewBox="0 0 64 64"><path d="M14 20h36v27H14zM21 14h22v6M22 27h20M22 34h13"/><circle cx="47" cy="43" r="9"/></svg></div><small>04 · BUILD</small><h3 data-en="Create Funnel Agent">Bygg Funnel Agent</h3><p data-en="Repeated manual analysis becomes a narrow internal agent used by the team.">Gjentatt manuell analyse blir en smal intern agent som teamet bruker.</p></article>
+            <article class="story-scene"><div class="scene-visual"><svg viewBox="0 0 64 64"><path d="M12 19l20-8 20 8-20 8-20-8zM12 28l20 8 20-8M12 37l20 8 20-8M12 46l20 8 20-8"/></svg></div><small>05 · OWN</small><h3 data-en="Productise proven IP">Produktiser bevist IP</h3><p data-en="If several customers gain measurable value, it can become a Growth Wizard module.">Hvis flere kunder får målbar verdi, kan den bli en Growth Wizard-modul.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="system-map" id="system" aria-labelledby="system-title">
+      <div class="page">
+        <div class="section-intro">
+          <p class="kicker" data-en="The full system">Hele systemet</p>
+          <h2 id="system-title" data-en="Access → understanding → action → learning.">Tilgang → forståelse → handling → læring.</h2>
+          <p data-en="Each layer has one job. The separation prevents a single AI chat from pretending to be the database, the workflow and the decision-maker at the same time.">Hvert lag har én oppgave. Skillet hindrer at én AI-chat later som den er database, arbeidsflyt og beslutningstaker samtidig.</p>
+        </div>
+        <div class="architecture-visual" aria-label="Visual map of the Delegate system">
+          <svg class="architecture-lines" viewBox="0 0 1100 640" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M260 165 C390 165 400 250 505 270"/><path d="M260 475 C390 475 400 390 505 370"/>
+            <path d="M595 270 C700 250 710 165 840 165"/><path d="M595 370 C700 390 710 475 840 475"/>
+            <circle cx="505" cy="270" r="6"/><circle cx="505" cy="370" r="6"/><circle cx="595" cy="270" r="6"/><circle cx="595" cy="370" r="6"/>
+          </svg>
+          <div class="arch-grid">
+            <article class="arch-node">
+              <div class="arch-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 27V10l11-5 11 5v17M3 27h26M10 14h4v4h-4zm8 0h4v4h-4zm-8 7h4v4h-4zm8 0h4v4h-4z"/></svg></div>
+              <h3 data-en="1. Real businesses">1. Virkelige virksomheter</h3><p data-en="Smokefree, GPDI and later customers bring real goals, systems, work and friction.">Smokefree, GPDI og senere kunder bringer reelle mål, systemer, arbeid og friksjon.</p>
+            </article>
+            <article class="arch-node brain">
+              <div><div class="brain-rings"><div class="brain-core">BRAIN</div></div><h3>Delegate Brain</h3><p data-en="Company Brain understands the business. People Brain understands demonstrated skills. Work Brain understands tasks, outcomes and recurring patterns.">Company Brain forstår virksomheten. People Brain forstår demonstrerte ferdigheter. Work Brain forstår oppgaver, resultater og gjentatte mønstre.</p></div>
+            </article>
+            <article class="arch-node">
+              <div class="arch-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 11V7h7v4m4 10v4h7v-4M14 9h4c5 0 7 3 7 7v5M18 23h-4c-5 0-7-3-7-7v-5"/><circle cx="16" cy="16" r="3"/></svg></div>
+              <h3 data-en="3. Agents + people">3. Agenter + mennesker</h3><p data-en="AI analyses and prepares. People approve, execute and quality-check based on risk.">AI analyserer og forbereder. Mennesker godkjenner, utfører og kvalitetssikrer etter risiko.</p>
+            </article>
+            <article class="arch-node">
+              <div class="arch-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M8 7h16v18H8zM12 11h8M12 16h8M12 21h5M5 12H2m3 5H2m3 5H2m25-10h3m-3 5h3m-3 5h3"/></svg></div>
+              <h3>2. Delegate Connect</h3><p data-en="Discovers systems and capabilities, then opens only the customer-approved doors through OAuth, API or MCP.">Oppdager systemer og kapabiliteter, og åpner bare kundegodkjente dører via OAuth, API eller MCP.</p>
+            </article>
+            <article class="arch-node">
+              <div class="arch-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 24l6-6 5 4 10-12M20 10h6v6M5 27h22"/></svg></div>
+              <h3 data-en="4. Improvement loops">4. Forbedringssløyfer</h3><p data-en="Customer Discovery finds products. Growth Wizard improves products. Learning Brain improves capability.">Customer Discovery finner produkter. Growth Wizard forbedrer produkter. Learning Brain forbedrer kompetanse.</p>
+            </article>
+          </div>
+        </div>
+        <div class="feedback-loop" data-en="Results and learning flow back to Brain — so the next decision starts with more evidence, not from zero.">Resultater og læring går tilbake til Brain — slik at neste beslutning starter med mer evidens, ikke fra null.</div>
+      </div>
+    </section>
+
+    <section class="discovery" id="discovery" aria-labelledby="discovery-title">
+      <div class="page">
+        <div class="section-intro">
+          <p class="kicker" data-en="Discovery, in plain language">Discovery, forklart enkelt</p>
+          <h2 id="discovery-title" data-en="Discovery means understanding before prescribing.">Discovery betyr å forstå før vi foreskriver.</h2>
+          <p data-en="It is a structured investigation of how a company works today, what it is trying to achieve and where evidence shows friction. It is not a sales call, a software demo or a request for every password.">Det er en strukturert undersøkelse av hvordan en virksomhet fungerer i dag, hva den prøver å oppnå, og hvor evidens viser friksjon. Det er ikke en salgssamtale, en software-demo eller en forespørsel om alle passord.</p>
+        </div>
+        <div class="definition-box"><strong data-en="The discovery question">Discovery-spørsmålet</strong><p data-en-html="<b>What is actually happening?</b> We compare what people say, what the systems show and what the work produces. Only then do we choose the smallest valuable problem to solve."><b>Hva skjer faktisk?</b> Vi sammenligner det mennesker sier, det systemene viser og det arbeidet produserer. Først da velger vi det minste verdifulle problemet å løse.</p></div>
+        <div class="discovery-map" aria-label="Discovery map with six investigation areas">
+          <svg class="discovery-spokes" viewBox="0 0 1100 680" preserveAspectRatio="none" aria-hidden="true"><line x1="550" y1="340" x2="550" y2="100"/><line x1="550" y1="340" x2="910" y2="210"/><line x1="550" y1="340" x2="850" y2="570"/><line x1="550" y1="340" x2="550" y2="610"/><line x1="550" y1="340" x2="250" y2="570"/><line x1="550" y1="340" x2="190" y2="210"/></svg>
+          <div class="discovery-center"><div><strong data-en="Company today">Virksomheten i dag</strong><span data-en="One shared, evidence-backed picture">Ett felles, evidensbasert bilde</span></div></div>
+          <article class="discovery-node n1"><h3 data-en="Goals and economics">Mål og økonomi</h3><p data-en="What must improve? Which numbers matter? What is valuable enough to act on?">Hva må bli bedre? Hvilke tall betyr noe? Hva er verdifullt nok til å handle på?</p></article>
+          <article class="discovery-node n2"><h3 data-en="Customers and journey">Kunder og kundereise</h3><p data-en="Who buys, why, where do they hesitate, and what do support, reviews and behaviour reveal?">Hvem kjøper, hvorfor, hvor nøler de, og hva viser support, omtaler og atferd?</p></article>
+          <article class="discovery-node n3"><h3 data-en="Systems and access">Systemer og tilgang</h3><p data-en="Which tools exist, who owns them, which data and actions exist, and what may Delegate access?">Hvilke verktøy finnes, hvem eier dem, hvilke data og handlinger finnes, og hva kan Delegate få tilgang til?</p></article>
+          <article class="discovery-node n4"><h3 data-en="Work and decisions">Arbeid og beslutninger</h3><p data-en="How does work move today? Where are handoffs, approvals, delays and repeated manual steps?">Hvordan flyter arbeidet i dag? Hvor er overleveringer, godkjenninger, forsinkelser og gjentatte manuelle steg?</p></article>
+          <article class="discovery-node n5"><h3 data-en="People and capability">Mennesker og kompetanse</h3><p data-en="Who knows what, who decides what, and which capabilities must be demonstrated for the next task?">Hvem kan hva, hvem bestemmer hva, og hvilke ferdigheter må demonstreres for neste oppgave?</p></article>
+          <article class="discovery-node n6"><h3 data-en="Evidence and history">Evidens og historikk</h3><p data-en="What has already been tried? What happened? Which claims are facts, hypotheses or unanswered questions?">Hva er allerede prøvd? Hva skjedde? Hvilke påstander er fakta, hypoteser eller åpne spørsmål?</p></article>
+        </div>
+        <div class="discovery-output">
+          <div class="output-card"><strong data-en="Company map">Selskapskart</strong><span data-en="goals, offers, customers, owners">mål, tilbud, kunder, eiere</span></div>
+          <div class="output-card"><strong data-en="System map">Systemkart</strong><span data-en="tools, data, permissions, gaps">verktøy, data, tilganger, gap</span></div>
+          <div class="output-card"><strong data-en="Pain map">Friksjonskart</strong><span data-en="delays, rework, drop-off, risk">forsinkelser, omarbeid, frafall, risiko</span></div>
+          <div class="output-card"><strong data-en="Opportunity backlog">Mulighetsliste</strong><span data-en="ranked by value, evidence and effort">rangert etter verdi, evidens og innsats</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="products" id="products" aria-labelledby="products-title">
+      <div class="page">
+        <div class="section-intro">
+          <p class="kicker" data-en="The product family">Produktfamilien</p>
+          <h2 id="products-title" data-en="Three flagship products — built in sequence, not in parallel.">Tre flaggskip-produkter — bygget i rekkefølge, ikke parallelt.</h2>
+          <p data-en="Connect and Brain come first. Growth Wizard comes only after Delegate has reliable operating data and a safe approval model.">Connect og Brain kommer først. Growth Wizard kommer først når Delegate har pålitelige driftsdata og en trygg godkjenningsmodell.</p>
+        </div>
+        <div class="product-grid">
+          <article class="product-card">
+            <div class="product-number">01</div>
+            <div class="product-visual" aria-label="Delegate Connect visual"><svg viewBox="0 0 280 115" role="img"><path class="line" d="M58 58H111M169 58H222"/><circle class="soft" cx="45" cy="58" r="28"/><rect class="node" x="111" y="30" width="58" height="56" rx="16"/><circle class="soft" cx="235" cy="58" r="28"/><text x="45" y="61">BUSINESS</text><text x="140" y="55">PERMIT</text><text x="140" y="68">+ MAP</text><text x="235" y="61">TOOLS</text></svg></div>
+            <h3>Delegate Connect</h3>
+            <p data-en="The secure front door between a business and AI. It discovers what systems exist, what the business wants to achieve, and what access is actually needed.">Den sikre inngangen mellom en virksomhet og AI. Den oppdager hvilke systemer som finnes, hva virksomheten vil oppnå, og hvilken tilgang som faktisk trengs.</p>
+            <div class="product-detail"><strong data-en="What makes it ours">Hva som gjør den vår</strong><span data-en="Business discovery, capability mapping and understandable permissions — not merely a catalogue of integrations.">Business discovery, capability mapping og forståelige tillatelser — ikke bare en katalog med integrasjoner.</span></div>
+            <span class="status" data-en="Nango chosen · no live customer connection">Nango valgt · ingen live kundetilkobling</span>
+          </article>
+          <article class="product-card">
+            <div class="product-number">02</div>
+            <div class="product-visual" aria-label="Delegate Brain visual"><svg viewBox="0 0 280 115" role="img"><circle class="line" cx="140" cy="58" r="49"/><circle class="line" cx="140" cy="58" r="34"/><circle class="node" cx="140" cy="58" r="20"/><text x="140" y="61">BRAIN</text><text class="light-text" x="65" y="30">COMPANY</text><text class="light-text" x="215" y="30">PEOPLE</text><text class="light-text" x="140" y="108">WORK</text></svg></div>
+            <h3>Delegate Brain</h3>
+            <p data-en="A structured and source-traceable understanding of companies, people and work. It remembers what happened, why decisions were made and what evidence supports them.">En strukturert og kildesporbar forståelse av selskaper, mennesker og arbeid. Den husker hva som skjedde, hvorfor beslutninger ble tatt og hvilken evidens som støtter dem.</p>
+            <div class="product-detail"><strong data-en="Three connected brains">Tre sammenkoblede brains</strong><span data-en="Company = business context. People = demonstrated capability. Work = tasks, outcomes, blockers and repeated patterns.">Company = forretningskontekst. People = demonstrert kompetanse. Work = oppgaver, resultater, blokkere og gjentatte mønstre.</span></div>
+            <span class="status" data-en="Supabase foundation built · content grows through discovery">Supabase-grunnmur bygget · innhold vokser gjennom discovery</span>
+          </article>
+          <article class="product-card">
+            <div class="product-number">03</div>
+            <div class="product-visual" aria-label="Growth Wizard visual"><svg viewBox="0 0 280 115" role="img"><path class="line" d="M43 58C43 22 87 12 114 32M166 32C193 12 237 22 237 58M237 58C237 94 193 104 166 84M114 84C87 104 43 94 43 58"/><circle class="node" cx="140" cy="58" r="25"/><circle class="soft" cx="43" cy="58" r="16"/><circle class="soft" cx="237" cy="58" r="16"/><text x="140" y="61">LEARN</text><text x="43" y="61">SEE</text><text x="237" y="61">TEST</text></svg></div>
+            <h3>Growth Wizard</h3>
+            <p data-en="A later improvement engine that observes behaviour, detects friction, forms hypotheses, proposes safe experiments and retains the learning from successes and failures.">En senere forbedringsmotor som observerer atferd, finner friksjon, former hypoteser, foreslår trygge eksperimenter og tar vare på læringen fra både suksess og feil.</p>
+            <div class="product-detail"><strong data-en="Continuous, not one-off">Kontinuerlig, ikke engangs</strong><span data-en="Observe → understand → hypothesise → approve → test → measure → retain or roll back → learn.">Observer → forstå → hypotese → godkjenn → test → mål → behold eller rull tilbake → lær.</span></div>
+            <span class="status later" data-en="Later · requires real data and human approval">Senere · krever ekte data og menneskelig godkjenning</span>
+          </article>
+        </div>
+        <div class="connect-workbench">
+          <p class="kicker" data-en="Connect, one level deeper">Connect, ett nivå dypere</p>
+          <h3 data-en="What happens when the customer asks AI to do something — and no connector exists?">Hva skjer når kunden ber AI gjøre noe — og koblingen ikke finnes?</h3>
+          <p data-en="Delegate should not manually rebuild standard integrations forever. Existing connectors are reused first. When a valuable capability is missing, an Integration Builder Agent can prepare a new connector under testing, security review and human approval.">Delegate skal ikke bygge standardintegrasjoner manuelt for alltid. Eksisterende koblinger gjenbrukes først. Når en verdifull kapabilitet mangler, kan en Integration Builder Agent forberede en ny kobling under testing, sikkerhetskontroll og menneskelig godkjenning.</p>
+          <div class="connector-visual" aria-label="Connector decision and builder process">
+            <div class="connector-request"><div class="arch-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 8h20v16H6zM10 12h12M10 17h8M22 21l4 4"/></svg></div><div><strong data-en="Customer intent becomes a capability">Kundens ønske blir en kapabilitet</strong><p data-en-html="Example: “Add these five products to the shop.” Brain translates that into <code>Product.create</code>, the required data and the approvals needed before publishing.">Eksempel: «Legg disse fem varene i butikken.» Brain oversetter det til <code>Product.create</code>, nødvendige data og godkjenningene som trengs før publisering.</p></div></div>
+            <article class="connector-path existing"><h3 data-en="Path A · Connector exists">Spor A · Koblingen finnes</h3><p data-en="Use Nango or another approved provider. The customer grants the minimum OAuth scope; credentials remain outside the AI model.">Bruk Nango eller en annen godkjent leverandør. Kunden gir minste OAuth-tilgang; credentials holdes utenfor AI-modellen.</p></article>
+            <div class="connector-decision"><strong data-en="Approved connector already available?">Finnes godkjent kobling allerede?</strong></div>
+            <article class="connector-path builder"><h3 data-en="Path B · Build the missing connector">Spor B · Bygg manglende kobling</h3><ol><li data-en="Read official API documentation">Les offisiell API-dokumentasjon</li><li data-en="Map endpoints and authentication">Kartlegg endpoints og autentisering</li><li data-en="Generate narrow tools">Lag smale tools</li><li data-en="Test in sandbox">Test i sandbox</li><li data-en="Security and QA review">Sikkerhets- og QA-kontroll</li><li data-en="Human approval before catalogue">Menneskelig godkjenning før katalog</li></ol></article>
+            <div class="business-graph"><div><h3>Delegate Business Graph</h3><p data-en="A common business language lets agents ask for a product, order or campaign without needing to know whether the customer uses Shopify, WooCommerce or another system. Each connector maps its system into the same concepts.">Et felles forretningsspråk lar agenter spørre etter et produkt, en ordre eller kampanje uten å måtte vite om kunden bruker Shopify, WooCommerce eller et annet system. Hver kobling mapper sitt system til de samme begrepene.</p></div><div class="entity-cloud"><span>Customer</span><span>Lead</span><span>Product</span><span>Order</span><span>Invoice</span><span>Ticket</span><span>Campaign</span><span>Employee</span><span>Document</span><span>Subscription</span><span>Event</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="agents" id="agents" aria-labelledby="agents-title">
+      <div class="page">
+        <div class="section-intro">
+          <p class="kicker" data-en="The AI workforce">AI-arbeidslaget</p>
+          <h2 id="agents-title" data-en="One coordinating brain. Several narrow specialist agents.">Én koordinerende hjerne. Flere smale spesialistagenter.</h2>
+          <p data-en="An agent is not a digital employee with unlimited authority. It has a defined purpose, approved tools, limited permissions, quality criteria and a point where a person must approve the next action.">En agent er ikke en digital ansatt med ubegrenset myndighet. Den har et definert formål, godkjente verktøy, begrensede tilganger, kvalitetskriterier og et punkt der et menneske må godkjenne neste handling.</p>
+        </div>
+        <div class="agent-map" aria-label="Delegate specialist agent map">
+          <svg viewBox="0 0 1100 720" preserveAspectRatio="none" aria-hidden="true"><line x1="550" y1="360" x2="550" y2="100"/><line x1="550" y1="360" x2="900" y2="220"/><line x1="550" y1="360" x2="850" y2="610"/><line x1="550" y1="360" x2="550" y2="660"/><line x1="550" y1="360" x2="250" y2="610"/><line x1="550" y1="360" x2="200" y2="220"/></svg>
+          <div class="agent-core"><strong data-en="Delegate Brain coordinates context, rules and hand-offs">Delegate Brain koordinerer kontekst, regler og overleveringer</strong></div>
+          <div class="agent-node a1"><b>Discovery Agent</b><span data-en="Maps goals, customers, systems, work and evidence; produces the opportunity backlog.">Kartlegger mål, kunder, systemer, arbeid og evidens; lager mulighetslisten.</span></div>
+          <div class="agent-node a2"><b>Integration Builder Agent</b><span data-en="Reads API documentation, prepares narrow connectors and tests them in a sandbox.">Leser API-dokumentasjon, forbereder smale koblinger og tester dem i sandbox.</span></div>
+          <div class="agent-node a3"><b>Growth / Marketing Agent</b><span data-en="Finds friction, prepares briefs and hypotheses and proposes measurable experiments.">Finner friksjon, lager briefs og hypoteser og foreslår målbare eksperimenter.</span></div>
+          <div class="agent-node a4"><b>QA + Security Agent</b><span data-en="Tests quality, permissions, claims, regressions and rollback readiness before approval.">Tester kvalitet, tilganger, påstander, regresjoner og tilbakeføring før godkjenning.</span></div>
+          <div class="agent-node a5"><b>AI Tutor + SOP Agent</b><span data-en="Turns real work into explanation, practice, feedback, evidence and improved procedures.">Gjør ekte arbeid om til forklaring, øving, feedback, evidens og forbedrede prosedyrer.</span></div>
+          <div class="agent-node a6"><b>Execution / Project Agent</b><span data-en="Turns approved decisions into owners, ClickUp tasks, dependencies, follow-up and evidence.">Gjør godkjente beslutninger om til eiere, ClickUp-oppgaver, avhengigheter, oppfølging og evidens.</span></div>
+        </div>
+        <div class="agent-rule" data-en-html="<strong>Human control:</strong> agents may investigate and prepare autonomously inside their mandate. Publishing, customer contact, money, deletion, sensitive data and material production changes require the named human owner."><strong>Menneskelig kontroll:</strong> agenter kan undersøke og forberede selvstendig innen mandatet sitt. Publisering, kundekontakt, penger, sletting, sensitive data og vesentlige produksjonsendringer krever navngitt menneskelig eier.</div>
+      </div>
+    </section>
+
+    <section class="applications" id="applications" aria-labelledby="applications-title">
+      <div class="page">
+        <div class="section-intro">
+          <p class="kicker" data-en="Agents become applications">Agenter blir applikasjoner</p>
+          <h2 id="applications-title" data-en="Repeated work earns a specialist agent — repeated value may earn a product.">Gjentatt arbeid fortjener en spesialistagent — gjentatt verdi kan fortjene et produkt.</h2>
+          <p data-en="Each example begins as a human-led service supported by an agent. Only after repeated evidence should it become a stable internal application or customer-facing product. These are candidates, not six products to build now.">Hvert eksempel starter som en menneskeledet tjeneste støttet av en agent. Først etter gjentatt evidens bør det bli en stabil intern applikasjon eller et kundevendt produkt. Dette er kandidater, ikke seks produkter som skal bygges nå.</p>
+        </div>
+        <div class="app-grid">
+          <article class="app-card"><span class="app-tag" data-en="Growth agent → possible product">Growth-agent → mulig produkt</span><h3>Smokefree D2C Intelligence</h3><p data-en="Connects funnel, campaigns, merchandising, CRO, retention and customer behaviour into one prioritised improvement loop.">Kobler funnel, kampanjer, merchandising, CRO, retention og kundeatferd til én prioritert forbedringssløyfe.</p><div class="mini-flow"><span data-en="Observe">Observer</span><i>→</i><span data-en="Test">Test</span><i>→</i><span data-en="Learn">Lær</span></div></article>
+          <article class="app-card"><span class="app-tag" data-en="Retail agent → possible product">Retail-agent → mulig produkt</span><h3>GPDI Retail Intelligence</h3><p data-en="Brings together retail accounts, field sales, stock, sell-through, reorders, geography and brand reporting.">Samler retail-kontoer, field sales, lager, sell-through, gjenbestillinger, geografi og brand reporting.</p><div class="mini-flow"><span data-en="Collect">Samle</span><i>→</i><span data-en="Prioritise">Prioriter</span><i>→</i><span data-en="Act">Handle</span></div></article>
+          <article class="app-card"><span class="app-tag" data-en="Discovery agent → service/product">Discovery-agent → tjeneste/produkt</span><h3>AI Business Audit</h3><p data-en="A structured company discovery that produces a system map, capability gaps, ranked opportunities and a practical next step.">En strukturert company discovery som gir systemkart, kompetansegap, rangerte muligheter og et praktisk neste steg.</p><div class="mini-flow"><span data-en="Map">Kartlegg</span><i>→</i><span data-en="Rank">Ranger</span><i>→</i><span>MVP</span></div></article>
+          <article class="app-card"><span class="app-tag" data-en="Tutor agent → learning product">Tutor-agent → læringsprodukt</span><h3>Learning Coach + SOP Builder</h3><p data-en="Turns a real task into guidance, practice, quality review and an improved procedure — while recording only observable capability evidence.">Gjør en reell oppgave om til veiledning, praksis, kvalitetskontroll og en forbedret prosedyre — med bare observerbar kompetanseevidens.</p><div class="mini-flow"><span data-en="Teach">Lær</span><i>→</i><span data-en="Perform">Utfør</span><i>→</i><span data-en="Improve">Forbedre</span></div></article>
+          <article class="app-card"><span class="app-tag" data-en="Execution agent → internal tool">Execution-agent → internt verktøy</span><h3>Meeting → Execution</h3><p data-en="Converts an approved decision into owners, tasks, deadlines and follow-up, while keeping ClickUp as execution and Supabase as memory.">Gjør en godkjent beslutning om til eiere, oppgaver, frister og oppfølging, mens ClickUp er gjennomføring og Supabase er minne.</p><div class="mini-flow"><span data-en="Decide">Beslutning</span><i>→</i><span>ClickUp</span><i>→</i><span data-en="Evidence">Evidens</span></div></article>
+          <article class="app-card"><span class="app-tag" data-en="Builder agent → reusable IP">Builder-agent → gjenbrukbar IP</span><h3>Skill Builder</h3><p data-en="Detects repeated manual work in Work Brain and proposes when a stable process may deserve a reusable Delegate skill or internal tool.">Oppdager gjentatt manuelt arbeid i Work Brain og foreslår når en stabil prosess kan fortjene en gjenbrukbar Delegate-skill eller et internt verktøy.</p><div class="mini-flow"><span data-en="Repeat">Gjentas</span><i>→</i><span data-en="Systemise">Systemiser</span><i>→</i><span data-en="Own">Eie</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="loops" id="loops" aria-labelledby="loops-title">
+      <div class="page">
+        <div class="section-intro">
+          <p class="kicker" data-en="Three loops — one Delegate Intelligence">Tre sløyfer — én Delegate Intelligence</p>
+          <h2 id="loops-title" data-en="Customers discover products. Users improve products. Work improves people.">Kunder oppdager produkter. Brukere forbedrer produkter. Arbeid utvikler mennesker.</h2>
+          <p data-en="The loops share evidence through Delegate Brain, but they answer different questions. This separation prevents customer discovery, product optimisation and employee development from becoming one vague AI process.">Sløyfene deler evidens gjennom Delegate Brain, men svarer på ulike spørsmål. Skillet hindrer at kundeinnsikt, produktforbedring og medarbeiderutvikling blir én vag AI-prosess.</p>
+        </div>
+        <div class="loop-grid">
+          <article class="loop-card"><div class="loop-ring"><strong>Customer Discovery Loop</strong></div><h3 data-en="What should we build?">Hva bør vi bygge?</h3><ol><li data-en="Customer problems">Kundeproblemer</li><li data-en="Delivered solutions">Leverte løsninger</li><li data-en="Repeated patterns">Gjentatte mønstre</li><li data-en="Internal tool">Internt verktøy</li><li data-en="Possible SaaS">Mulig SaaS</li></ol></article>
+          <article class="loop-card"><div class="loop-ring"><strong>Product Growth Loop</strong></div><h3 data-en="What should improve next?">Hva bør forbedres nå?</h3><ol><li data-en="User behaviour">Brukeratferd</li><li data-en="Friction">Friksjon</li><li data-en="Hypothesis">Hypotese</li><li data-en="Safe experiment">Trygt eksperiment</li><li data-en="Measured learning">Målt læring</li></ol></article>
+          <article class="loop-card"><div class="loop-ring"><strong>People Learning Loop</strong></div><h3 data-en="What capability is needed?">Hvilken kompetanse trengs?</h3><ol><li data-en="Real task">Reell oppgave</li><li data-en="Capability gap">Kompetansegap</li><li data-en="Targeted practice">Målrettet øving</li><li data-en="Reviewed performance">Vurdert utførelse</li><li data-en="Improved programme">Forbedret program</li></ol></article>
+        </div>
+        <div class="loop-join" data-en-html="<strong>Shared memory:</strong> problem → solution → tools → cost → time → result → customer feedback → automation candidate → missing software."><strong>Felles minne:</strong> problem → løsning → verktøy → kostnad → tid → resultat → kundefeedback → automasjonskandidat → manglende software.</div>
+      </div>
+    </section>
+
+    <section class="smokefree" id="smokefree" aria-labelledby="smokefree-title">
+      <div class="page">
+        <div class="case-head">
+          <div class="case-badge"><strong>Smokefree</strong><span data-en="Proposed Growth Loop #001 — D2C / retail">Foreslått Growth Loop #001 — D2C / retail</span></div>
+          <div>
+            <p class="kicker" data-en="Example: how it may work">Eksempel: slik kan det fungere</p>
+            <h2 id="smokefree-title" data-en="From an unclear signal to measured work.">Fra uklart signal til målt arbeid.</h2>
+            <div class="case-note"><p data-en-html="<strong>Status:</strong> Smokefree is a real first customer/operating lab, but the exact systems, permissions and first MVP must still be confirmed in discovery. The flow below is a concrete model — not a claim that continuous monitoring is live."><strong>Status:</strong> Smokefree er en reell første kunde/operativ lab, men eksakte systemer, tillatelser og første MVP må fortsatt bekreftes i discovery. Flyten under er en konkret modell — ikke en påstand om at kontinuerlig overvåkning er live.</p></div>
+          </div>
+        </div>
+        <div class="journey">
+          <article class="journey-step"><small>01</small><h3>Discover</h3><p data-en="Map the webshop, marketing, customer journey, goals, owners and current pain points.">Kartlegg nettbutikk, markedsføring, kundereise, mål, eiere og dagens smertepunkter.</p></article>
+          <article class="journey-step"><small>02</small><h3>Connect</h3><p data-en="Connect only confirmed, customer-owned tools with scoped access.">Koble bare bekreftede, kundeeide verktøy med avgrenset tilgang.</p></article>
+          <article class="journey-step"><small>03</small><h3>Understand</h3><p data-en="Build the Smokefree Company Brain: products, funnel, decisions, evidence and history.">Bygg Smokefree Company Brain: produkter, funnel, beslutninger, evidens og historikk.</p></article>
+          <article class="journey-step"><small>04</small><h3>Choose</h3><p data-en="Rank real opportunities and choose one measurable MVP with clear stop criteria.">Ranger reelle muligheter og velg én målbar MVP med tydelige stoppkriterier.</p></article>
+          <article class="journey-step"><small>05</small><h3>Execute</h3><p data-en="AI prepares the task; Wax or Sasa performs it; the responsible human quality-checks it.">AI forbereder oppgaven; Wax eller Sasa utfører; ansvarlig menneske kvalitetssikrer.</p></article>
+          <article class="journey-step"><small>06</small><h3>Learn</h3><p data-en="Measure the outcome and write verified learning back to Company, People and Work Brain.">Mål resultatet og skriv verifisert læring tilbake til Company, People og Work Brain.</p></article>
+        </div>
+
+        <div class="case-story" aria-label="Smokefree marketing case with Sasa">
+          <p class="kicker" data-en="Case A · Sasa and marketing">Case A · Sasa og markedsføring</p>
+          <h3 data-en="From a weak mobile message to a controlled campaign experiment.">Fra et svakt mobilbudskap til et kontrollert kampanjeeksperiment.</h3>
+          <p data-en="This is a hypothetical, concrete process example — not a claim about current Smokefree performance. The point is to show how marketing, design, AI and learning become one piece of work.">Dette er et hypotetisk, konkret prosesseksempel — ikke en påstand om dagens Smokefree-resultater. Poenget er å vise hvordan markedsføring, design, AI og læring blir ett sammenhengende arbeid.</p>
+          <div class="story-grid">
+            <article class="story-scene"><div class="scene-visual"><svg viewBox="0 0 64 64"><path d="M12 49V33h9v16m7 0V22h9v27m7 0V12h9v37M8 53h49"/><path d="M10 17c10 2 16 8 21 15"/></svg></div><small>01 · SIGNAL</small><h3 data-en="Find the constraint">Finn begrensningen</h3><p data-en="Example: mobile visitors from one campaign view products but rarely add them to cart.">Eksempel: mobiltrafikk fra én kampanje ser produktene, men legger dem sjelden i kurven.</p></article>
+            <article class="story-scene"><div class="scene-visual"><svg viewBox="0 0 64 64"><path d="M14 14h36v36H14zM20 22h24M20 30h17M20 38h20"/><circle cx="48" cy="46" r="8"/><path d="M48 42v8m-4-4h8"/></svg></div><small>02 · BRIEF</small><h3 data-en="AI prepares evidence">AI forbereder evidens</h3><p data-en="Brain combines campaign promise, page content, behaviour and customer questions into a short creative brief.">Brain kobler kampanjeløfte, sideinnhold, atferd og kundespørsmål til en kort kreativ brief.</p></article>
+            <article class="story-scene"><div class="scene-visual"><svg viewBox="0 0 64 64"><path d="M12 47l11-29 18 18-29 11zM23 18l8-6 21 21-6 8M17 39l8 8"/></svg></div><small>03 · SASA</small><h3 data-en="Create two clear variants">Lag to tydelige varianter</h3><p data-en="Sasa turns the brief into visual hierarchy, campaign assets and mobile-first copy — with AI as sparring partner.">Sasa gjør briefen om til visuelt hierarki, kampanjemateriell og mobiltilpasset tekst — med AI som sparringspartner.</p></article>
+            <article class="story-scene"><div class="scene-visual"><svg viewBox="0 0 64 64"><path d="M12 18h40v28H12zM12 28h40M32 28v18"/><path d="M20 23h1m6 0h1"/><circle cx="42" cy="37" r="5"/><path d="M40 37l2 2 4-5"/></svg></div><small>04 · APPROVAL</small><h3 data-en="Review and limit risk">Kontroller og avgrens risiko</h3><p data-en="Pat or the responsible person verifies claims, brand fit, target group, budget, duration and stop criteria before launch.">Pat eller ansvarlig person verifiserer påstander, brand, målgruppe, budsjett, varighet og stoppkriterier før lansering.</p></article>
+            <article class="story-scene"><div class="scene-visual"><svg viewBox="0 0 64 64"><path d="M10 45c8-18 18-25 40-28M38 13l12 4-6 11"/><circle cx="17" cy="43" r="6"/><circle cx="49" cy="17" r="6"/><path d="M15 51h35"/></svg></div><small>05 · LEARN</small><h3 data-en="Measure more than clicks">Mål mer enn klikk</h3><p data-en="Compare add-to-cart, purchase, margin, complaints and repeat behaviour. Keep, change or stop — and record why.">Sammenlign legg-i-kurv, kjøp, margin, klager og gjenkjøp. Behold, endre eller stopp — og dokumenter hvorfor.</p></article>
+          </div>
+        </div>
+
+        <div class="case-split">
+          <article class="case-person sasa"><span class="person-label">Sasa · marketing</span><h3 data-en="What Sasa learns through this case">Det Sasa lærer gjennom caset</h3><ul><li data-en="Translate evidence into a campaign hypothesis">Gjøre evidens om til en kampanjehypotese</li><li data-en="Design for a defined audience and metric">Designe for definert målgruppe og måltall</li><li data-en="Document choices and use feedback">Dokumentere valg og bruke feedback</li><li data-en="Read results without claiming causality too early">Lese resultater uten å påstå årsak for tidlig</li></ul></article>
+          <article class="case-person wax"><span class="person-label">Wax · implementation</span><h3 data-en="Case B: the technical companion task">Case B: den tekniske følgeoppgaven</h3><ul><li data-en="Map where the campaign and landing page live">Kartlegge hvor kampanje og landingsside bor</li><li data-en="Build a test version without touching production">Bygge testversjon uten å røre produksjon</li><li data-en="Run responsive and checkout QA">Kjøre responsiv- og checkout-QA</li><li data-en="Write an SOP and a rollback plan">Skrive SOP og tilbakeføringsplan</li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="learning" id="learning" aria-labelledby="learning-title">
+      <div class="page">
+        <div class="section-intro">
+          <p class="kicker" data-en="The living trainee model">Den levende opplæringsmodellen</p>
+          <h2 id="learning-title" data-en="AI does not just teach Wax and Sasa. It learns which teaching produces better work.">AI lærer ikke bare opp Wax og Sasa. Den lærer hvilken undervisning som gir bedre arbeid.</h2>
+          <p data-en="The model starts with a real customer need. It measures observable performance, adapts the next intervention and updates both the person's capability evidence and Delegate's training material. The working term ‘Goethe intelligence’ means adaptive, humane development — not hidden personality profiling or rigid learning styles.">Modellen starter med et reelt kundebehov. Den måler observerbar prestasjon, tilpasser neste læringstiltak og oppdaterer både personens kompetansebevis og Delegates opplæringsmateriell. Arbeidsbegrepet «Goethe-intelligens» betyr adaptiv, menneskelig utvikling — ikke skjult personlighetsprofilering eller rigide læringsstiler.</p>
+        </div>
+        <div class="learning-wheel" aria-label="Adaptive learning loop">
+          <div class="wheel-track" aria-hidden="true"></div>
+          <div class="wheel-core"><strong data-en="Real customer work is the curriculum">Ekte kundearbeid er læreplanen</strong></div>
+          <div class="wheel-step w1"><b data-en="1. Assess">1. Kartlegg</b><span data-en="A small practical baseline shows what the person can do now.">En liten praktisk baseline viser hva personen kan nå.</span></div>
+          <div class="wheel-step w2"><b data-en="2. Explain">2. Forklar</b><span data-en="AI gives the minimum context, example and quality criteria needed.">AI gir minimum av kontekst, eksempel og kvalitetskriterier.</span></div>
+          <div class="wheel-step w3"><b data-en="3. Practise safely">3. Øv trygt</b><span data-en="Sandbox, draft or limited task before production access.">Sandbox, utkast eller avgrenset oppgave før produksjonstilgang.</span></div>
+          <div class="wheel-step w4"><b data-en="4. Perform">4. Utfør</b><span data-en="The person completes a real, scoped customer task.">Personen løser en reell, avgrenset kundeoppgave.</span></div>
+          <div class="wheel-step w5"><b data-en="5. Review evidence">5. Vurder evidens</b><span data-en="AI checks against the rubric; a responsible human approves risky work.">AI sjekker mot rubrikken; ansvarlig menneske godkjenner risikofylt arbeid.</span></div>
+          <div class="wheel-step w6"><b data-en="6. Adapt and retain">6. Tilpass og behold</b><span data-en="Update capability, the next lesson, the SOP and the programme itself.">Oppdater kompetanse, neste leksjon, SOP-en og selve programmet.</span></div>
+        </div>
+        <div class="learning-tracks">
+          <article class="learning-track"><h3 data-en="Wax: technical execution path">Wax: teknisk gjennomføringsspor</h3><p data-en="Example sequence for the Smokefree case. Exact level is established through a practical baseline, not assumed.">Eksempelrekkefølge for Smokefree-caset. Eksakt nivå etableres gjennom en praktisk baseline, ikke antas.</p><div class="lesson-chain"><span data-en="System map">Systemkart</span><span>Shopify / web</span><span data-en="Test environment">Testmiljø</span><span data-en="Responsive QA">Responsiv QA</span><span data-en="Checkout test">Checkout-test</span><span>SOP</span><span data-en="Supervised release">Veiledet publisering</span></div></article>
+          <article class="learning-track"><h3 data-en="Sasa: design and marketing path">Sasa: design- og markedsføringsspor</h3><p data-en="Her confirmed starting point is design, marketing and campaigns. The programme adds evidence, customer journey, experimentation and measurement.">Hennes bekreftede utgangspunkt er design, markedsføring og kampanjer. Programmet legger til evidens, kundereise, eksperimentering og måling.</p><div class="lesson-chain"><span data-en="Audience insight">Målgruppeinnsikt</span><span data-en="Creative brief">Kreativ brief</span><span data-en="Mobile hierarchy">Mobilhierarki</span><span data-en="Campaign variant">Kampanjevariant</span><span data-en="Approval">Godkjenning</span><span data-en="Read results">Lese resultat</span><span data-en="Retrospective">Retrospektiv</span></div></article>
+        </div>
+        <div class="learning-rule" data-en-html="<strong>The system may learn:</strong> which explanation, example, practice format and feedback improves performance on a specific kind of task. <strong>It may not infer:</strong> personality, emotion, health or a permanent ‘learning type’. Wax and Sasa must be able to see and correct their records."><strong>Systemet kan lære:</strong> hvilken forklaring, eksempel, øvingsform og feedback som forbedrer prestasjon på en bestemt oppgavetype. <strong>Det skal ikke utlede:</strong> personlighet, følelser, helse eller en permanent «læringstype». Wax og Sasa må kunne se og korrigere registreringene sine.</div>
+      </div>
+    </section>
+
+    <section class="organisation" id="organisation" aria-labelledby="organisation-title">
+      <div class="page">
+        <div class="section-intro">
+          <p class="kicker" data-en="Organisation">Organisasjon</p>
+          <h2 id="organisation-title" data-en="Three areas of responsibility. One learning team.">Tre ansvarsområder. Ett lærende team.</h2>
+          <p data-en="The role model is Jonathan's current direction. It must be validated with Pat and Janie during discovery before mandates and decision rights become final.">Rollemodellen er Jonathans nåværende retning. Den må valideres med Pat og Janie i discovery før mandat og beslutningsrom blir endelige.</p>
+        </div>
+        <div class="org-top">
+          <article class="org-card"><div class="initials">JD</div><h3 data-en="Jonathan · Direction and systems">Jonathan · Retning og systemer</h3><p data-en="Norway-based responsibility for vision, company strategy, AI architecture, product design and what Delegate should gradually own.">Norge-basert ansvar for visjon, selskapsstrategi, AI-arkitektur, produktdesign og hva Delegate gradvis skal eie.</p><ul><li data-en="Builds the Brain and agent foundation">Bygger Brain- og agentgrunnmur</li><li data-en="Sets product and quality direction">Setter produkt- og kvalitetsretning</li><li data-en="Translates learning into reusable IP">Gjør læring om til gjenbrukbar IP</li></ul></article>
+          <article class="org-card"><div class="initials">PA</div><h3 data-en="Pat · Smokefree, GPDI and operations">Pat · Smokefree, GPDI og drift</h3><p data-en="Has the main operating responsibility for Smokefree and GPDI and leads the mapping of those businesses. Inside Delegate, Pat connects people, operations and execution.">Har hovedansvaret for driften i Smokefree og GPDI og leder kartleggingen av disse virksomhetene. Innad i Delegate kobler Pat mennesker, drift og gjennomføring.</p><ul><li data-en="Leads company mapping and pain discovery">Leder selskapskartlegging og pain discovery</li><li data-en="Connects brand and company needs">Kobler merkevare- og selskapsbehov</li><li data-en="Keeps execution realistic">Holder gjennomføringen realistisk</li></ul></article>
+          <article class="org-card"><div class="initials">JA</div><h3 data-en="Janie · Customer start and coordination">Janie · Kundeoppstart og koordinering</h3><p data-en="Proposed responsibility for structuring customer onboarding and coordinating the discovery process with Pat, while keeping relationships and progress connected.">Foreslått ansvar for å strukturere kundeoppstart og koordinere discovery-prosessen sammen med Pat, samtidig som relasjoner og fremdrift holdes samlet.</p><ul><li data-en="Structures first customer conversations">Strukturerer de første kundesamtalene</li><li data-en="Coordinates onboarding and progress">Koordinerer onboarding og fremdrift</li><li data-en="Surfaces blockers and unclear decisions">Løfter blokkere og uklare beslutninger</li></ul></article>
+        </div>
+        <div class="team-bridge" aria-hidden="true"></div>
+        <div class="operators">
+          <article class="org-card"><div class="initials">WX</div><h3>Wax · AI-native operator</h3><p data-en="Capability path is discovered through observable work, not assumed in advance. Proposed early work: website stack, manual checkout testing and SOP documentation.">Kompetanseveien oppdages gjennom observerbart arbeid, ikke antas på forhånd. Foreslått tidlig arbeid: website-stack, manuell checkout-test og SOP-dokumentasjon.</p></article>
+          <article class="org-card"><div class="initials">SA</div><h3>Sasa · Design / marketing operator</h3><p data-en="Known starting point: graphic design, marketing and campaigns. Proposed early work: marketing/CRO baseline, Smokefree audit and evidence-backed hypotheses.">Bekreftet utgangspunkt: grafisk design, markedsføring og kampanjer. Foreslått tidlig arbeid: marketing/CRO-baseline, Smokefree-audit og evidensbaserte hypoteser.</p></article>
+        </div>
+        <div class="validation-note" data-en-html="<strong>People Brain rule:</strong> store demonstrated capability and transparent learning evidence — never covert personality or emotional profiling. Employees must be able to understand and correct what is recorded."><strong>People Brain-regel:</strong> lagre demonstrert kompetanse og transparent læringsevidens — aldri skjult personlighet- eller emosjonsprofilering. Ansatte må kunne forstå og korrigere det som registreres.</div>
+      </div>
+    </section>
+
+    <section class="workplans" id="workplans" aria-labelledby="workplans-title">
+      <div class="page">
+        <div class="section-intro">
+          <p class="kicker" data-en="From vision to named work">Fra visjon til navngitt arbeid</p>
+          <h2 id="workplans-title" data-en="One work-plan page per person.">Én arbeidsplanside per person.</h2>
+          <p data-en="The pages use the same structure intended for ClickUp: owner, status, priority, dependency and evidence. Account setup and onboarding Wax and Sasa come before the first customer pilot.">Sidene bruker samme struktur som er planlagt i ClickUp: eier, status, prioritet, avhengighet og evidens. Kontooppsett og onboarding av Wax og Sasa kommer før første kundepilot.</p>
+        </div>
+        <div class="workplan-grid">
+          <a class="workplan-card" href="delegate-workplan-pat.html"><span class="initials">PA</span><h3 data-en="Pat's work plan">Pats arbeidsplan</h3><p data-en="Accounts, access, Smokefree/GPDI mapping, operational pain log and realistic execution.">Kontoer, tilganger, kartlegging av Smokefree/GPDI, operativ pain logg og realistisk gjennomføring.</p><strong data-en="Open work plan →">Åpne arbeidsplan →</strong></a>
+          <a class="workplan-card" href="delegate-workplan-janie.html"><span class="initials">JA</span><h3 data-en="Janie's work plan">Janies arbeidsplan</h3><p data-en="Accounts, onboarding structure, coordination, customer conversations and progress follow-up.">Kontoer, onboardingstruktur, koordinering, kundesamtaler og fremdriftsoppfølging.</p><strong data-en="Open work plan →">Åpne arbeidsplan →</strong></a>
+          <a class="workplan-card" href="delegate-workplan-jonathan.html"><span class="initials">JD</span><h3 data-en="Jonathan's work plan">Jonathans arbeidsplan</h3><p data-en="Workspace setup, Brain, agent architecture, permissions, quality direction and product ownership.">Arbeidsflateoppsett, Brain, agentarkitektur, tilganger, kvalitetsretning og produkteierskap.</p><strong data-en="Open work plan →">Åpne arbeidsplan →</strong></a>
+        </div>
+        <div class="sync-note" data-en-html="<strong>ClickUp status:</strong> the task structure is ready, but no ClickUp connector is available in this workspace. Actual task creation and two-way sync must be activated when ClickUp is connected."><strong>ClickUp-status:</strong> oppgavestrukturen er klar, men ingen ClickUp-tilkobling er tilgjengelig i denne arbeidsøkten. Faktisk opprettelse og toveis synk må aktiveres når ClickUp kobles til.</div>
+      </div>
+    </section>
+
+    <section class="records" aria-labelledby="records-title">
+      <div class="page">
+        <div class="section-intro">
+          <p class="kicker" data-en="Phase 1 tools">Verktøy i fase 1</p>
+          <h2 id="records-title" data-en="What do we use each tool for?">Hva bruker vi hvert verktøy til?</h2>
+          <p data-en="The team should not have to guess which account to create or where work belongs. These are the tools we start with and the job each one has.">Teamet skal ikke måtte gjette hvilken konto de skal opprette eller hvor arbeidet skal gjøres. Dette er verktøyene vi starter med, og jobben hvert verktøy har.</p>
+        </div>
+        <div class="record-stack">
+          <article class="record canonical"><strong>Claude Team</strong><span data-en="Daily AI workspace, Delegate Academy, shared instructions and approved skills">Daglig AI-arbeidsflate, Delegate Academy, felles instrukser og godkjente skills</span></article>
+          <article class="record"><strong>ClickUp</strong><span data-en="Tasks, owners, deadlines, blockers and progress">Oppgaver, ansvar, frister, blokkere og fremdrift</span></article>
+          <article class="record"><strong>Supabase</strong><span data-en="Delegate Brain: company context, decisions, work and learning evidence">Delegate Brain: selskapskontekst, beslutninger, arbeid og læringsevidens</span></article>
+          <article class="record"><strong>Google Drive</strong><span data-en="Documents, templates, meeting notes, images and approved deliverables">Dokumenter, maler, møtenotater, bilder og godkjente leveranser</span></article>
+          <article class="record"><strong>GitHub</strong><span data-en="Code, skills, agents and technical versions — primarily Jonathan and Wax initially">Kode, skills, agenter og tekniske versjoner — først og fremst Jonathan og Wax i starten</span></article>
+          <article class="record"><strong>ChatGPT / Codex</strong><span data-en="Jonathan's product and system building, second-model review and later OpenAI API work">Jonathans produkt- og systembygging, kontroll med en annen modell og senere OpenAI API-arbeid</span></article>
+        </div>
+        <div class="record-rule" data-en-html="<strong>Simple rule:</strong> work with AI in Claude Team; manage tasks in ClickUp; keep files in Drive; keep code in GitHub; store approved company context and learning in Delegate Brain. ChatGPT/Codex supports Jonathan's technical work. Automated agents use APIs later."><strong>Enkel regel:</strong> jobb med AI i Claude Team; følg opp oppgaver i ClickUp; lagre filer i Drive; lagre kode i GitHub; lagre godkjent selskapskontekst og læring i Delegate Brain. ChatGPT/Codex støtter Jonathans tekniske arbeid. Automatiserte agenter bruker API senere.</div>
+      </div>
+    </section>
+
+    <section class="roadmap" id="roadmap" aria-labelledby="roadmap-title">
+      <div class="page">
+        <div class="section-intro">
+          <p class="kicker" data-en="Phase 1 roadmap">Fase-1-roadmap</p>
+          <h2 id="roadmap-title" data-en="Build understanding before automation.">Bygg forståelse før automasjon.</h2>
+          <p data-en="The sequence is established; the exact first MVP remains open until discovery and the Opportunity Engine provide evidence.">Rekkefølgen er etablert; eksakt første MVP er åpen til discovery og Opportunity Engine gir evidens.</p>
+        </div>
+        <div class="timeline">
+          <article class="phase"><span class="phase-state next" data-en="First">Først</span><div class="phase-body"><h3 data-en="0. Create these exact accounts">0. Opprett disse konkrete kontoene</h3><p data-en-html="<strong>Pat, Janie, Wax and Sasa:</strong> a Claude Team seat in the Delegate organisation, a ClickUp account through the Delegate invitation, and access to the shared Delegate Google Drive. <strong>Wax:</strong> GitHub access when the first technical task starts. <strong>Jonathan:</strong> administers Claude Team, ClickUp, Drive, Supabase and GitHub, and uses Claude Code plus ChatGPT/Codex. API keys remain company-controlled and are not personal accounts."><strong>Pat, Janie, Wax og Sasa:</strong> Claude Team-sete i Delegate-organisasjonen, ClickUp-konto via Delegate-invitasjonen og tilgang til felles Delegate-mappe i Google Drive. <strong>Wax:</strong> GitHub-tilgang når første tekniske oppgave starter. <strong>Jonathan:</strong> administrerer Claude Team, ClickUp, Drive, Supabase og GitHub, og bruker Claude Code samt ChatGPT/Codex. API-nøkler eies av selskapet og er ikke personlige kontoer.</p></div></article>
+          <article class="phase"><span class="phase-state next" data-en="Then">Deretter</span><div class="phase-body"><h3 data-en="1. Claude Team, Delegate Academy and AI Fundamentals">1. Claude Team, Delegate Academy og AI Fundamentals</h3><p data-en="Jonathan creates the Claude Team organisation, short organisation instructions, Delegate Academy and Delegate Operations. Everyone completes practical AI Fundamentals: models, tokens, projects and Brain, prompts versus skills, agents, APIs/MCP, rubrics, gauntlets, verification, permissions, sensitive data and human escalation.">Jonathan oppretter Claude Team-organisasjonen, korte organisasjonsinstrukser, Delegate Academy og Delegate Operations. Alle gjennomfører praktisk AI Fundamentals: modeller, tokens, Projects og Brain, prompt kontra skill, agenter, API/MCP, rubrics, gauntlet, verifisering, tilganger, sensitive data og når AI skal eskalere til et menneske.</p></div></article>
+          <article class="phase"><span class="phase-state" data-en="Parallel">Parallelt</span><div class="phase-body"><h3 data-en="2. Minimum Delegate setup">2. Minimum Delegate-oppsett</h3><p data-en="Jonathan completes Brain v0, GitHub, ClickUp and the first three skills: delegate-ai-fundamentals, delegate-learning-coach and delegate-quality-review. He tests PostHog on Delegate first, then Smokefree staging, and postpones a custom workbench, OAuth platform and large agent fleet.">Jonathan ferdigstiller Brain v0, GitHub, ClickUp og de tre første skillsene: delegate-ai-fundamentals, delegate-learning-coach og delegate-quality-review. Han tester PostHog på Delegate først, deretter Smokefree staging, og utsetter egen workbench, OAuth-plattform og en stor agentpark.</p></div></article>
+          <article class="phase"><span class="phase-state next" data-en="Real work">Ekte arbeid</span><div class="phase-body"><h3 data-en="3. Discovery and practical baselines">3. Discovery og praktiske baselines</h3><p data-en="Pat maps real Smokefree and GPDI operations and keeps the pain log. Janie leads structured Company Discovery and critiques onboarding. Wax completes practical technical baseline tasks and starts with PostHog/website stack/checkout/SOP. Sasa audits marketing, creative, product presentation and one real funnel.">Pat kartlegger faktisk drift i Smokefree og GPDI og fører pain logg. Janie leder strukturert Company Discovery og vurderer onboardingprosessen. Wax gjennomfører praktisk teknisk baseline og starter med PostHog, website-stack, checkout-test og SOP. Sasa analyserer markedsføring, kreativer, produktpresentasjon og én reell funnel.</p></div></article>
+          <article class="phase"><span class="phase-state next" data-en="Weekly">Ukentlig</span><div class="phase-body"><h3 data-en="4. Delegate Lab">4. Delegate Lab</h3><p data-en="Every week the team brings one thing AI did well, one thing it did badly, one repeatable process, one automation opportunity, one missing skill and one possible product idea. The result becomes the Delegate Learning Log.">Hver uke tar teamet med én ting AI gjorde godt, én ting AI gjorde dårlig, én repeterbar prosess, én mulig automatisering, én skill som mangler og én mulig produktidé. Resultatet blir Delegate Learning Log.</p></div></article>
+          <article class="phase"><span class="phase-state later" data-en="MVP test">MVP-test</span><div class="phase-body"><h3 data-en="5. Prove one complete loop">5. Bevis én komplett sløyfe</h3><p data-en="The MVP is not a large platform. It is proof that the team can find one real problem, validate it, route the right work to Wax or Sasa, execute with AI support and a quality rubric, measure the result and store the learning in Brain.">MVP-en er ikke en stor plattform. Den er bevis på at teamet kan finne ett reelt problem, validere det, sende riktig arbeid til Wax eller Sasa, utføre med AI-støtte og kvalitetsrubric, måle resultatet og lagre læringen i Brain.</p></div></article>
+          <article class="phase"><span class="phase-state later" data-en="Order">Rekkefølge</span><div class="phase-body"><h3 data-en="6. Customer Zero → Smokefree → GPDI">6. Customer Zero → Smokefree → GPDI</h3><p data-en="Use the same setup on Delegate first. Then run Smokefree Growth Loop #001. Only after that, run GPDI Intelligence Loop #001. This tests the model against both ecommerce growth and B2B operations.">Bruk samme oppsett på Delegate først. Kjør deretter Smokefree Growth Loop #001. Først etterpå kjøres GPDI Intelligence Loop #001. Da testes modellen både mot netthandelsvekst og B2B-drift.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="glossary" id="glossary" aria-labelledby="glossary-title">
+      <div class="page">
+        <div class="section-intro">
+          <p class="kicker" data-en="Plain-language glossary">Ordliste i vanlig språk</p>
+          <h2 id="glossary-title" data-en="Technical words, made useful.">Tekniske ord, gjort forståelige.</h2>
+        </div>
+        <div class="glossary-grid">
+          <article class="term"><h3>Discovery</h3><p data-en="A structured investigation of goals, customers, work, systems, people and evidence before choosing a solution. Its output is a shared map and a ranked next step.">En strukturert undersøkelse av mål, kunder, arbeid, systemer, mennesker og evidens før man velger løsning. Resultatet er et felles kart og et prioritert neste steg.</p></article>
+          <article class="term"><h3>API</h3><p data-en="A controlled doorway that lets one system ask another system for data or an action. Example: ask a webshop for today's orders without manually opening the dashboard.">En kontrollert dør som lar ett system be et annet om data eller en handling. Eksempel: be nettbutikken om dagens ordre uten å åpne dashboardet manuelt.</p></article>
+          <article class="term"><h3>OAuth</h3><p data-en="A safe approval flow where the customer grants Delegate limited access without sharing a password. The customer can withdraw access later.">En trygg godkjenningsflyt der kunden gir Delegate begrenset tilgang uten å dele passord. Kunden kan trekke tilgangen tilbake.</p></article>
+          <article class="term"><h3>MCP</h3><p data-en="A standard way for AI to discover and use approved tools. Think of it as a common plug shape for AI tools.">En standard måte for AI å finne og bruke godkjente verktøy. Tenk på det som en felles pluggform for AI-verktøy.</p></article>
+          <article class="term"><h3>Webhook</h3><p data-en="An automatic notification from one system when something happens, such as a task changing status. Delegate does not yet run a permanent webhook service.">Et automatisk varsel fra ett system når noe skjer, som at en oppgave bytter status. Delegate kjører ennå ikke en permanent webhook-tjeneste.</p></article>
+          <article class="term"><h3>RLS</h3><p data-en="Row-Level Security: database rules that decide exactly which organisation or user may see each row. It is central to keeping customer data separated.">Row-Level Security: databaseregler som bestemmer nøyaktig hvilken organisasjon eller bruker som får se hver rad. Det er sentralt for å holde kundedata adskilt.</p></article>
+          <article class="term"><h3>Tenant</h3><p data-en="One organisation inside a shared system. Delegate, Smokefree and GPDI can each be separate tenants even when they use the same Supabase database.">Én organisasjon inne i et delt system. Delegate, Smokefree og GPDI kan være separate tenants selv om de bruker samme Supabase-database.</p></article>
+          <article class="term"><h3 data-en="Capability">Kapabilitet</h3><p data-en="Something the business or system can do, such as read orders, update a product or create a task. Permissions should be granted per capability, not as blanket access.">Noe virksomheten eller systemet kan gjøre, som å lese ordre, oppdatere et produkt eller opprette en oppgave. Tilgang bør gis per kapabilitet, ikke som blanket access.</p></article>
+          <article class="term"><h3 data-en="Agent">Agent</h3><p data-en="An AI process with a defined role, tools and rules. It can prepare or perform work within its mandate; it is not an employee with unlimited judgment.">En AI-prosess med definert rolle, verktøy og regler. Den kan forberede eller utføre arbeid innen mandatet sitt; den er ikke en ansatt med ubegrenset dømmekraft.</p></article>
+          <article class="term"><h3 data-en="Audit trail">Revisjonsspor</h3><p data-en="A record of who or what did something, when, with which permission and based on which evidence.">En logg over hvem eller hva som gjorde noe, når, med hvilken tillatelse og basert på hvilken evidens.</p></article>
+          <article class="term"><h3>MVP</h3><p data-en="The smallest real version that can test whether the idea creates measurable value — not a miniature version of every future feature.">Den minste reelle versjonen som kan teste om ideen skaper målbar verdi — ikke en miniatyr av alle fremtidige funksjoner.</p></article>
+          <article class="term"><h3>CRO</h3><p data-en="Conversion Rate Optimisation: improving how many visitors complete a valuable action, such as buying or signing up.">Conversion Rate Optimisation: forbedre hvor mange besøkende som fullfører en verdifull handling, som å kjøpe eller registrere seg.</p></article>
+          <article class="term"><h3 data-en="Rubric">Rubrikk</h3><p data-en="A clear quality checklist used before judging work. It makes feedback more consistent and reduces vague AI scoring.">En tydelig kvalitetssjekkliste som brukes før arbeid vurderes. Den gjør feedback mer konsistent og reduserer vag AI-scoring.</p></article>
+          <article class="term"><h3>Company Brain</h3><p data-en="The sourced, up-to-date business context for one company: what it sells, how it works, its systems, decisions, goals and history.">Den kildebelagte, oppdaterte forretningskonteksten for ett selskap: hva det selger, hvordan det arbeider, systemene, beslutningene, målene og historikken.</p></article>
+          <article class="term"><h3>People Brain</h3><p data-en="Transparent evidence of demonstrated capability and learning needs. It is not a secret personality score.">Transparent evidens på demonstrert kompetanse og læringsbehov. Det er ikke en skjult personlighetsscore.</p></article>
+          <article class="term"><h3>SOP</h3><p data-en="Standard Operating Procedure: a tested, step-by-step description of how recurring work should be done and checked.">Standard Operating Procedure: en testet steg-for-steg-beskrivelse av hvordan gjentatt arbeid skal utføres og kontrolleres.</p></article>
+          <article class="term"><h3>A/B-test</h3><p data-en="A controlled comparison of two versions for a defined audience and metric, with safeguards so a local improvement does not harm the wider business.">En kontrollert sammenligning av to varianter for en definert målgruppe og måling, med sikringer slik at en lokal forbedring ikke skader resten av virksomheten.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="guardrails" aria-labelledby="guardrails-title">
+      <div class="page">
+        <div class="section-intro">
+          <p class="kicker" data-en="Trust before autonomy">Tillit før autonomi</p>
+          <h2 id="guardrails-title" data-en="What Delegate must not shortcut.">Det Delegate ikke må ta snarveier rundt.</h2>
+          <p data-en="These are product and architecture principles. Cross-border customer and employee data still requires legal and DPO validation before production.">Dette er produkt- og arkitekturprinsipper. Grenseoverskridende kunde- og ansattdata krever fortsatt juridisk og DPO-validering før produksjon.</p>
+        </div>
+        <div class="guard-grid">
+          <article class="guard"><h3 data-en="Customer ownership">Kundeeierskap</h3><p data-en="The customer owns root accounts and business data. Delegate receives delegated, revocable access — never the customer's password.">Kunden eier root-kontoer og forretningsdata. Delegate får delegert tilgang som kan trekkes tilbake — aldri kundens passord.</p></article>
+          <article class="guard"><h3 data-en="Minimum necessary access">Minste nødvendige tilgang</h3><p data-en="Ask for the exact capability, scope and time needed for the task, not access to everything.">Be om nøyaktig kapabilitet, omfang og tid som oppgaven trenger, ikke tilgang til alt.</p></article>
+          <article class="guard"><h3 data-en="Human approval">Menneskelig godkjenning</h3><p data-en="Pricing, payments, refunds, customer outreach, privacy-sensitive work, deletion and major changes require explicit human approval.">Pris, betaling, refusjon, kundekontakt, personvernsensitivt arbeid, sletting og større endringer krever eksplisitt menneskelig godkjenning.</p></article>
+          <article class="guard"><h3 data-en="Evidence and uncertainty">Evidens og usikkerhet</h3><p data-en="Every important observation should carry a source, confidence and business impact. Uncertainty is labelled instead of guessed into fact.">Hver viktig observasjon bør ha kilde, sikkerhet og business impact. Usikkerhet merkes i stedet for å gjettes til fakta.</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="page">
+      <span data-en="Human-readable working resource · Supabase stores Delegate's approved business knowledge">Menneskelesbar arbeidsressurs · Supabase lagrer Delegate sin godkjente forretningskunnskap</span>
+      <span data-en="Aligned with Brain context 30 September 2026">Avstemt mot Brain-kontekst 30. september 2026</span>
+    </div>
+  </footer>
+
+  <script>
+    const translations = document.querySelectorAll("[data-en], [data-en-html]");
+    const languageButtons = document.querySelectorAll("[data-language]");
+    const languageGroup = document.querySelector(".language-switch");
+
+    translations.forEach((element) => { element.dataset.noHtml = element.innerHTML; });
+
+    function setLanguage(language) {
+      const useEnglish = language === "en";
+      translations.forEach((element) => {
+        element.innerHTML = useEnglish ? (element.dataset.enHtml || element.dataset.en) : element.dataset.noHtml;
+      });
+      languageButtons.forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.language === language));
+      });
+      document.documentElement.lang = language;
+      document.title = useEnglish
+        ? "Delegate — products, structure and examples"
+        : "Delegate — produkter, struktur og eksempler";
+      languageGroup.setAttribute("aria-label", useEnglish ? "Choose language" : "Velg språk");
+    }
+
+    languageButtons.forEach((button) => {
+      button.addEventListener("click", () => setLanguage(button.dataset.language));
+    });
+  </script>
+</body>
+</html>

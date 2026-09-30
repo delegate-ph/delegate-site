@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Delegate Blueprint v0 — et levende strategidokument for Delegate som AI-native product studio.">
+  <title>Delegate Blueprint v0</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23080b12'/%3E%3Cpath d='M16 17h15c11 0 18 6 18 15s-7 15-18 15H16V17Zm11 9v12h5c4 0 7-2 7-6s-3-6-7-6h-5Z' fill='%23e6ff5b'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink: #f4f5ef;
+      --muted: #9aa29f;
+      --dim: #68706e;
+      --bg: #080b12;
+      --panel: #10151d;
+      --panel-2: #151c25;
+      --line: rgba(255,255,255,.105);
+      --lime: #e6ff5b;
+      --mint: #78f6c8;
+      --blue: #79a7ff;
+      --orange: #ffac66;
+      --rose: #ff7f96;
+      --violet: #b89cff;
+      --r: 22px;
+      --shadow: 0 30px 80px rgba(0,0,0,.34);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 460px at 74% -5%, rgba(230,255,91,.09), transparent 62%),
+        radial-gradient(700px 520px at 4% 25%, rgba(121,167,255,.07), transparent 68%),
+        var(--bg);
+      font: 16px/1.55 Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; }
+    button { font: inherit; }
+    ::selection { background: var(--lime); color: #0a0d12; }
+
+    .shell { display: grid; grid-template-columns: 238px minmax(0, 1fr); min-height: 100vh; }
+    .rail {
+      position: sticky; top: 0; height: 100vh; padding: 24px 20px;
+      border-right: 1px solid var(--line); background: rgba(8,11,18,.82);
+      backdrop-filter: blur(22px); z-index: 10; display: flex; flex-direction: column;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; margin-bottom: 34px; }
+    .brand-mark { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px; background: var(--lime); color: #0b0f11; font-weight: 900; letter-spacing: -.08em; box-shadow: 0 0 32px rgba(230,255,91,.18); }
+    .brand-copy strong { display: block; letter-spacing: -.025em; }
+    .brand-copy span { color: var(--muted); font-size: .76rem; letter-spacing: .09em; text-transform: uppercase; }
+    .nav-label { color: var(--dim); text-transform: uppercase; letter-spacing: .14em; font-size: .69rem; margin: 0 12px 10px; }
+    .nav { display: grid; gap: 5px; }
+    .nav a { color: var(--muted); text-decoration: none; padding: 9px 12px; border-radius: 10px; font-size: .9rem; transition: .18s ease; }
+    .nav a:hover, .nav a.active { color: var(--ink); background: rgba(255,255,255,.06); }
+    .language-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; margin: -14px 0 24px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.025); }
+    .language-switch button { border: 0; border-radius: 8px; padding: 7px 8px; color: var(--muted); background: transparent; cursor: pointer; font-size: .75rem; font-weight: 800; letter-spacing: .08em; }
+    .language-switch button.active { color: #0a0d12; background: var(--lime); }
+    .rail-note { margin-top: auto; color: var(--muted); font-size: .74rem; border-top: 1px solid var(--line); padding-top: 18px; }
+    .rail-note strong { color: var(--ink); display: block; margin-bottom: 5px; }
+
+    main { min-width: 0; }
+    .wrap { width: min(1280px, calc(100% - 56px)); margin: 0 auto; }
+    section { padding: 92px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 30px; }
+    section:first-child { padding-top: 46px; }
+    .eyebrow { margin: 0 0 14px; color: var(--lime); font-size: .74rem; text-transform: uppercase; letter-spacing: .17em; font-weight: 760; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { margin-bottom: 24px; max-width: 1000px; font-size: clamp(3.2rem, 7.4vw, 7.4rem); line-height: .91; letter-spacing: -.074em; font-weight: 800; }
+    h2 { font-size: clamp(2.2rem, 4.4vw, 4.5rem); line-height: .98; letter-spacing: -.055em; max-width: 850px; margin-bottom: 22px; }
+    h3 { font-size: 1.08rem; letter-spacing: -.02em; }
+    .lead { color: #c5cbc7; max-width: 790px; font-size: clamp(1.08rem, 1.6vw, 1.32rem); line-height: 1.55; }
+    .muted { color: var(--muted); }
+    .small { font-size: .82rem; }
+    .num { font-variant-numeric: tabular-nums; }
+
+    .hero { min-height: 720px; display: grid; align-content: center; position: relative; overflow: hidden; }
+    .hero-top { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 72px; }
+    .version { display: inline-flex; gap: 9px; align-items: center; color: var(--muted); font-size: .8rem; }
+    .version i { width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 15px var(--lime); }
+    .hero-copy { position: relative; z-index: 1; }
+    .hero h1 span { color: var(--lime); }
+    .hero-foot { display: grid; grid-template-columns: 1.6fr .8fr .8fr; gap: 18px; margin-top: 60px; }
+    .hero-stat { padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); }
+    .hero-stat strong { display: block; color: var(--ink); font-size: 1.05rem; margin-bottom: 4px; }
+    .orbit { position: absolute; width: 480px; height: 480px; border: 1px solid rgba(230,255,91,.12); border-radius: 50%; right: -130px; top: 130px; }
+    .orbit:before, .orbit:after { content: ""; position: absolute; border: 1px solid rgba(255,255,255,.06); border-radius: inherit; }
+    .orbit:before { inset: 52px; }
+    .orbit:after { inset: 128px; background: radial-gradient(circle, rgba(230,255,91,.1), transparent 68%); }
+
+    .notice { display: grid; grid-template-columns: auto 1fr; gap: 16px; border: 1px solid rgba(255,172,102,.27); background: rgba(255,172,102,.055); padding: 18px 20px; border-radius: 16px; margin-top: 34px; max-width: 1000px; }
+    .notice-icon { color: var(--orange); font-weight: 900; }
+    .notice p { margin: 0; color: #c8c1b9; font-size: .9rem; }
+
+    .status-key { display: flex; flex-wrap: wrap; gap: 9px; margin: 32px 0 0; }
+    .badge { display: inline-flex; align-items: center; gap: 7px; width: fit-content; border-radius: 999px; border: 1px solid var(--line); padding: 5px 9px; color: var(--muted); font-size: .68rem; font-weight: 760; letter-spacing: .075em; text-transform: uppercase; white-space: nowrap; }
+    .badge:before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .decided { color: var(--mint); border-color: rgba(120,246,200,.25); background: rgba(120,246,200,.05); }
+    .proposed { color: var(--blue); border-color: rgba(121,167,255,.25); background: rgba(121,167,255,.05); }
+    .experiment { color: var(--violet); border-color: rgba(184,156,255,.25); background: rgba(184,156,255,.05); }
+    .open { color: var(--orange); border-color: rgba(255,172,102,.25); background: rgba(255,172,102,.05); }
+    .superseded { color: var(--rose); border-color: rgba(255,127,150,.25); background: rgba(255,127,150,.05); }
+
+    .manifesto { display: grid; grid-template-columns: .72fr 1.28fr; gap: 62px; align-items: start; }
+    .quote { font-size: clamp(1.65rem, 3vw, 3.1rem); line-height: 1.12; letter-spacing: -.045em; }
+    .quote em { color: var(--lime); font-style: normal; }
+    .principles { display: grid; gap: 13px; }
+    .principle { display: grid; grid-template-columns: 46px 1fr; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .principle .index { color: var(--dim); font-size: .75rem; padding-top: 3px; }
+    .principle h3 { margin-bottom: 6px; }
+    .principle p { color: var(--muted); margin: 0; font-size: .93rem; }
+
+    .strategy-line { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 44px; border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; box-shadow: var(--shadow); }
+    .phase { min-height: 230px; padding: 25px; border-right: 1px solid var(--line); background: linear-gradient(150deg, rgba(255,255,255,.035), transparent); position: relative; }
+    .phase:last-child { border-right: 0; }
+    .phase .step { color: var(--dim); font-size: .72rem; letter-spacing: .14em; }
+    .phase h3 { margin: 62px 0 8px; font-size: 1.45rem; }
+    .phase p { color: var(--muted); margin: 0; font-size: .88rem; }
+    .phase:not(:last-child):after { content: "→"; position: absolute; right: -13px; top: 50%; z-index: 2; color: var(--lime); background: var(--bg); width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; }
+    .phase:last-child { background: linear-gradient(140deg, rgba(230,255,91,.12), rgba(230,255,91,.025)); }
+
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 38px; }
+    .section-head p { max-width: 480px; color: var(--muted); margin-bottom: 4px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .card { border: 1px solid var(--line); border-radius: var(--r); background: rgba(16,21,29,.82); padding: 24px; min-width: 0; }
+    .card:hover { border-color: rgba(255,255,255,.17); }
+    .card-top { display: flex; justify-content: space-between; gap: 14px; align-items: start; margin-bottom: 36px; }
+    .card-icon { width: 42px; height: 42px; border-radius: 13px; background: rgba(255,255,255,.055); display: grid; place-items: center; color: var(--lime); font-weight: 800; }
+    .card h3 { margin-bottom: 8px; }
+    .card p { color: var(--muted); font-size: .9rem; margin-bottom: 0; }
+    .meta { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--dim); font-size: .73rem; }
+
+    .stack { margin-top: 44px; display: grid; grid-template-columns: 1fr 78px 1fr 78px 1fr; align-items: stretch; }
+    .stack-block { border: 1px solid var(--line); border-radius: var(--r); background: var(--panel); padding: 28px; min-height: 310px; display: flex; flex-direction: column; }
+    .stack-block:nth-child(5) { background: linear-gradient(150deg, rgba(230,255,91,.11), rgba(16,21,29,.85)); }
+    .stack-num { color: var(--dim); font-size: .7rem; letter-spacing: .14em; }
+    .stack-block h3 { font-size: 1.7rem; margin: auto 0 10px; }
+    .stack-block p { color: var(--muted); font-size: .9rem; }
+    .stack-block ul { margin: 14px 0 0; padding: 0; list-style: none; color: #c1c7c4; font-size: .82rem; }
+    .stack-block li { padding: 6px 0; border-top: 1px solid var(--line); }
+    .connector { display: grid; place-items: center; color: var(--lime); font-size: 1.4rem; }
+
+    .loops { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 38px; }
+    .loop { border: 1px solid var(--line); border-radius: 50%; aspect-ratio: 1; padding: 13%; display: flex; flex-direction: column; justify-content: center; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.04), transparent 65%); }
+    .loop:nth-child(2) { border-color: rgba(230,255,91,.28); }
+    .loop span { color: var(--dim); text-transform: uppercase; font-size: .67rem; letter-spacing: .14em; }
+    .loop h3 { font-size: clamp(1.25rem, 2vw, 2rem); margin: 10px 0 12px; }
+    .loop p { color: var(--muted); font-size: .84rem; margin: 0; }
+
+    .people-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    .person { padding: 20px; min-height: 245px; display: flex; flex-direction: column; }
+    .initials { font-size: 2rem; line-height: 1; letter-spacing: -.07em; color: var(--lime); margin-bottom: auto; }
+    .person h3 { margin: 42px 0 4px; }
+    .person .role { color: var(--muted); font-size: .82rem; min-height: 44px; }
+    .person .meta { margin-top: 15px; }
+
+    .boundary { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 36px; }
+    .boundary-card { min-height: 320px; padding: 30px; border-radius: var(--r); border: 1px solid var(--line); }
+    .boundary-card.private { background: linear-gradient(145deg, rgba(184,156,255,.09), rgba(16,21,29,.65)); }
+    .boundary-card.business { background: linear-gradient(145deg, rgba(230,255,91,.095), rgba(16,21,29,.65)); }
+    .boundary-card h3 { font-size: 1.8rem; margin: 80px 0 9px; }
+    .boundary-card p { color: var(--muted); max-width: 520px; }
+
+    .portfolio { display: grid; gap: 12px; margin-top: 35px; }
+    .portfolio-row { display: grid; grid-template-columns: 1.1fr .62fr 1.65fr .85fr; gap: 20px; align-items: center; border: 1px solid var(--line); border-radius: 15px; padding: 17px 18px; background: rgba(255,255,255,.018); }
+    .portfolio-row.header { color: var(--dim); font-size: .69rem; text-transform: uppercase; letter-spacing: .12em; border: 0; padding-top: 0; padding-bottom: 2px; background: none; }
+    .portfolio-row strong { letter-spacing: -.015em; }
+    .portfolio-row p { margin: 0; color: var(--muted); font-size: .84rem; }
+
+    .rules { counter-reset: rule; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 38px; }
+    .rule { counter-increment: rule; min-height: 220px; position: relative; overflow: hidden; }
+    .rule:after { content: counter(rule, decimal-leading-zero); position: absolute; right: 18px; bottom: -28px; color: rgba(255,255,255,.035); font-size: 7.5rem; font-weight: 800; line-height: 1; }
+    .rule h3, .rule p, .rule .badge { position: relative; z-index: 1; }
+
+
+    .roadmap-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 38px; counter-reset: roadmap; }
+    .roadmap-step { counter-increment: roadmap; min-height: 190px; border: 1px solid var(--line); border-radius: 17px; padding: 19px; background: rgba(255,255,255,.02); display: flex; flex-direction: column; }
+    .roadmap-step:before { content: counter(roadmap, decimal-leading-zero); color: var(--lime); font: 800 .76rem ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; }
+    .roadmap-step h3 { margin: auto 0 7px; }
+    .roadmap-step p { color: var(--muted); font-size: .82rem; margin: 0; }
+    .roadmap-step.key { border-color: rgba(230,255,91,.3); background: linear-gradient(145deg, rgba(230,255,91,.09), rgba(255,255,255,.015)); }
+    .flowline { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 22px; }
+    .flowline span { padding: 9px 12px; border: 1px solid var(--line); border-radius: 999px; color: #c7cdca; font-size: .78rem; }
+    .flowline i { color: var(--lime); font-style: normal; }
+
+
+    .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 34px; }
+    .filter-btn { color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 8px 12px; cursor: pointer; }
+    .filter-btn:hover, .filter-btn.active { color: #0b0e13; background: var(--lime); border-color: var(--lime); }
+    [data-status-card].hidden { display: none; }
+
+    footer { padding: 42px 0 56px; color: var(--dim); font-size: .78rem; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 18px; }
+
+    @media (max-width: 1080px) {
+      .shell { grid-template-columns: 1fr; }
+      .rail { height: auto; position: sticky; padding: 12px 20px; border-right: 0; border-bottom: 1px solid var(--line); flex-direction: row; align-items: center; overflow-x: auto; }
+      .brand { margin: 0 24px 0 0; flex: 0 0 auto; }
+      .brand-copy, .nav-label, .rail-note { display: none; }
+      .language-switch { display: flex; margin: 0 18px 0 0; flex: 0 0 auto; }
+      .nav { display: flex; white-space: nowrap; }
+      .nav a { padding: 7px 10px; }
+      .hero { min-height: 650px; }
+      .people-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 780px) {
+      .wrap { width: min(100% - 32px, 1280px); }
+      section { padding: 68px 0; }
+      section:first-child { padding-top: 30px; }
+      .hero { min-height: auto; }
+      .hero-top { margin-bottom: 76px; }
+      .hero-foot, .manifesto, .section-head, .grid-3, .grid-2, .loops, .boundary, .rules { grid-template-columns: 1fr; }
+      .section-head { display: grid; }
+      .strategy-line { grid-template-columns: 1fr; }
+      .phase { min-height: 190px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .phase:last-child { border-bottom: 0; }
+      .phase:not(:last-child):after { content: "↓"; top: auto; bottom: -13px; right: 28px; }
+      .stack { grid-template-columns: 1fr; }
+      .connector { min-height: 58px; transform: rotate(90deg); }
+      .loop { aspect-ratio: auto; min-height: 280px; border-radius: var(--r); padding: 34px; }
+      .people-grid { grid-template-columns: 1fr 1fr; }
+      .portfolio-row, .portfolio-row.header { grid-template-columns: 1fr; gap: 8px; }
+      .portfolio-row.header { display: none; }
+      .roadmap-grid { grid-template-columns: 1fr 1fr; }
+      footer .wrap { display: grid; }
+    }
+
+    @media (max-width: 520px) {
+      .brand-mark { width: 34px; height: 34px; }
+      .rail { padding-inline: 12px; }
+      .nav a { font-size: .78rem; }
+      h1 { font-size: 3.25rem; }
+      .hero-top { align-items: start; }
+      .hero-foot { gap: 26px; }
+      .people-grid { grid-template-columns: 1fr; }
+      .roadmap-grid { grid-template-columns: 1fr; }
+      .orbit { opacity: .55; }
+    }
+
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+    @media print {
+      .rail, .filter-bar { display: none; }
+      .shell { display: block; }
+      body { background: white; color: #111; }
+      .wrap { width: 92%; }
+      section { break-inside: avoid; border-color: #ddd; }
+      .card, .phase, .stack-block, .boundary-card, .portfolio-row { color: #111; background: white !important; border-color: #ccc; box-shadow: none; }
+      .muted, .card p, .phase p, .stack-block p, .loop p, .boundary-card p, .portfolio-row p { color: #555; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="rail" aria-label="Innholdsfortegnelse">
+      <a class="brand" href="#top" aria-label="Delegate Blueprint til toppen">
+        <span class="brand-mark">D</span>
+        <span class="brand-copy"><strong>Delegate</strong><span>Blueprint v0</span></span>
+      </a>
+      <div class="language-switch" role="group" aria-label="Choose language">
+        <button type="button" class="active" data-language="no" aria-pressed="true">NO</button>
+        <button type="button" data-language="en" aria-pressed="false">EN</button>
+      </div>
+      <p class="nav-label" data-en="Document">Dokument</p>
+      <nav class="nav">
+        <a href="#thesis" data-en="Direction">Retning</a>
+        <a href="#owners" data-en="The three of us">Oss tre</a>
+        <a href="#strategy" data-en="Strategy">Strategi</a>
+        <a href="#architecture" data-en="Architecture">Arkitektur</a>
+        <a href="#loops" data-en="Learning loops">Læringssløyfer</a>
+        <a href="#ecosystem" data-en="Ecosystem">Økosystem</a>
+        <a href="#people" data-en="People">Mennesker</a>
+        <a href="#pilots" data-en="Test customers">Testkunder</a>
+        <a href="#mvp" data-en="MVP pipeline">MVP-pipeline</a>
+        <a href="#portfolio" data-en="Portfolio">Portefølje</a>
+        <a href="#principles" data-en="Principles">Prinsipper</a>
+        <a href="#provisioning" data-en="Provisioning & identity">Provisjonering og identitet</a>
+        <a href="#orchestration" data-en="Orchestration layer">Orkestreringslag</a>
+        <a href="#agents" data-en="Agent architecture">Agent-arkitektur</a>
+        <a href="#execution" data-en="Execution & phase 1 tasks">Utførelse og fase 1</a>
+      </nav>
+      <div class="rail-note" data-en-html="<strong>Working document</strong>Not a control room. No live data, authentication or task execution."><strong>Arbeidsdokument</strong>Ikke et kontrollrom. Ingen live-data, auth eller oppgaveutførelse.</div>
+    </aside>
+
+    <main id="top">
+      <section class="hero">
+        <div class="orbit" aria-hidden="true"></div>
+        <div class="wrap">
+          <div class="hero-top">
+            <div class="version" data-en-html="<i></i> Living company blueprint · v0 · 28.09.2026"><i></i> Levende company blueprint · v0 · 28.09.2026</div>
+            <span class="badge proposed">Working model</span>
+          </div>
+          <div class="hero-copy">
+            <p class="eyebrow">AI-native product studio · Norway × Philippines</p>
+            <h1>Build through work.<br><span>Own what matters.</span></h1>
+            <p class="lead" data-en="Delegate uses real customer work to build cash flow, capability, product insight and — over time — products and IP of its own.">Delegate bruker ekte kundearbeid til å bygge kontantstrøm, kompetanse, produktinnsikt og — gradvis — egne produkter og IP.</p>
+            <div class="hero-foot">
+              <div class="hero-stat" data-en-html="<strong>Strategic transition</strong>Resell / Orchestrate → Learn → Build → Own"><strong>Strategisk overgang</strong>Resell / Orchestrate → Learn → Build → Own</div>
+              <div class="hero-stat" data-en-html="<strong>Technology spine</strong>Connect · Brain · Growth Wizard"><strong>Teknologisk ryggrad</strong>Connect · Brain · Growth Wizard</div>
+              <div class="hero-stat" data-en-html="<strong>Operating philosophy</strong>Human judgment · AI leverage · measured learning"><strong>Operativ filosofi</strong>Human judgment · AI leverage · measured learning</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="thesis">
+        <div class="wrap">
+          <div class="manifesto">
+            <div>
+              <p class="eyebrow" data-en="01 · Direction">01 · Retning</p>
+              <h2 data-en="Not a VA agency with AI added on top.">Ikke et VA-byrå med AI på toppen.</h2>
+              <div class="status-key" aria-label="Statusforklaring">
+                <span class="badge decided">Decided</span>
+                <span class="badge proposed">Proposed</span>
+                <span class="badge experiment">Experiment</span>
+                <span class="badge open">Open question</span>
+                <span class="badge superseded">Superseded</span>
+              </div>
+            </div>
+            <div>
+              <p class="quote" data-en-html="Delegate will be an <em>AI-native product studio</em> that learns through delivery — and turns repeatable solutions into products.">Delegate skal være et <em>AI-native product studio</em> som lærer gjennom levering — og gjør repeterbare løsninger om til produkter.</p>
+              <div class="principles">
+                <div class="principle"><span class="index">01</span><div><h3 data-en="Start with reality">Start med virkeligheten</h3><p data-en="Customer work creates revenue and reveals real problems before major product investments.">Kundearbeid gir inntekt og avdekker faktiske problemer før store produktinvesteringer.</p></div></div>
+                <div class="principle"><span class="index">02</span><div><h3 data-en="Systemise what repeats">Systematiser det som gjentar seg</h3><p data-en="Problem → solution → tools → effort → outcome → learning is documented in a structured way.">Problem → løsning → verktøy → innsats → resultat → læring dokumenteres strukturert.</p></div></div>
+                <div class="principle"><span class="index">03</span><div><h3 data-en="Build only after evidence">Bygg bare etter evidens</h3><p data-en="Internal tools come before products; a product is earned through demonstrated value and reuse.">Interne verktøy kommer før produkter; produkt kommer først når verdi og gjenbruk er demonstrert.</p></div></div>
+                <div class="principle"><span class="index">04</span><div><h3 data-en="Keep human judgment in charge">La mennesker beholde dømmekraften</h3><p data-en="AI can observe, propose and act within guardrails. Direction and material risk remain a human responsibility.">AI kan observere, foreslå og utføre innen rammer. Retning og materiell risiko krever menneskelig ansvar.</p></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="owners">
+        <div class="wrap">
+          <div class="section-head">
+            <div><p class="eyebrow" data-en="02 · Jonathan, Pat & Janie">02 · Jonathan, Pat og Janie</p><h2 data-en="One company direction. Three clear areas of responsibility.">Én selskapsretning. Tre tydelige ansvarsområder.</h2></div>
+            <p data-en="This is the shared blueprint for the three of you — not an internal AI memo. It should make it clear what you are building, why, and what each person needs to own next.">Dette er det felles blueprintet for dere tre — ikke et internt AI-notat. Det skal være tydelig hva dere bygger, hvorfor og hva hver av dere må eie videre.</p>
+          </div>
+          <div class="grid-3">
+            <article class="card"><div class="card-top"><span class="card-icon">JD</span><span class="badge proposed">Working focus · updated 30.09</span></div><h3>Jonathan</h3><p data-en="Sets vision and direction from Norway, develops the AI architecture, systems and product design, and decides what Delegate should gradually own.">Setter visjon og retning fra Norge, utvikler AI-arkitekturen, systemene og produktdesignet, og avgjør hva Delegate gradvis bør eie.</p><div class="meta" data-en="Immediate focus · define the MVP and quality bar">Nærmeste fokus · definere MVP og kvalitetsnivå</div></article>
+            <article class="card"><div class="card-top"><span class="card-icon">PA</span><span class="badge proposed">Working focus · updated 30.09</span></div><h3>Pat</h3><p data-en="Connects Delegate to the real operations in Smokefree and GPDI, with emphasis on operations, people and execution. Existing customer, employee and commercial relationships remain unchanged.">Kobler Delegate til den virkelige driften i Smokefree og GPDI, med vekt på drift, mennesker og gjennomføring. Eksisterende kunde-, ansatt- og kommersielle relasjoner fortsetter som før.</p><div class="meta" data-en="Discovery must validate scope and decision rights">Discovery skal validere omfang og beslutningsrom</div></article>
+            <article class="card"><div class="card-top"><span class="card-icon">JA</span><span class="badge proposed">Working focus · updated 30.09</span></div><h3>Janie</h3><p data-en="Structures discovery, customer onboarding, relationships and direction while coordinating execution, the team, quality review, Business Brain quality and escalation.">Strukturerer discovery, kundeoppstart, relasjoner og retning, samtidig som hun koordinerer gjennomføring, team, kvalitetskontroll, Business Brain-kvalitet og eskalering.</p><div class="meta" data-en="Intended model · must be validated with Janie and Pat — absolutely not fixed">Tiltenkt modell · må valideres med Janie og Pat — absolutt ikke fast</div></article>
+          </div>
+          <div class="notice"><div class="notice-icon">→</div><p data-en-html="<strong>Shared goal:</strong> Build a small operating system where customer work develops the team, the team creates reusable capability, and reusable capability moves Delegate toward owned products."><strong>Felles mål:</strong> Bygg et lite operativt system der kundearbeid utvikler teamet, teamet skaper gjenbrukbar kapasitet, og gjenbrukbar kapasitet flytter Delegate mot egne produkter.</p></div>
+        </div>
+      </section>
+
+      <section id="strategy">
+        <div class="wrap">
+          <div class="section-head">
+            <div><p class="eyebrow" data-en="03 · Strategy">03 · Strategi</p><h2 data-en="Distribution first. Ownership over time.">Distribusjon først. Eierskap over tid.</h2></div>
+            <p data-en="The model is simple: use proven tools from the market to learn what Delegate should eventually own.">Modellen er enkel: bruk gjennomprøvde verktøy fra markedet for å lære hva Delegate etter hvert bør eie selv.</p>
+          </div>
+          <div class="strategy-line">
+            <article class="phase"><span class="step">PHASE 01</span><h3>Orchestrate</h3><p data-en="Combine existing SaaS, AI and people into clear customer outcomes.">Sett sammen eksisterende SaaS, AI og mennesker til tydelige kundeutfall.</p></article>
+            <article class="phase"><span class="step">PHASE 02</span><h3>Learn</h3><p data-en="Capture repeated needs, friction, cost and manual workarounds.">Fang gjentatte behov, friksjon, kostnader og manuelle workarounds.</p></article>
+            <article class="phase"><span class="step">PHASE 03</span><h3>Build</h3><p data-en="Build narrow internal tools where the team repeats the same work.">Lag smale interne verktøy der teamet gjentar samme arbeid.</p></article>
+            <article class="phase"><span class="step">PHASE 04</span><h3>Own</h3><p data-en="Productise what creates proven advantage, margin and defensible IP.">Produktiser det som skaper dokumentert fordel, margin og defensibel IP.</p></article>
+          </div>
+          <div class="grid-3" style="margin-top:16px">
+            <article class="card"><div class="card-top"><span class="card-icon">$</span><span class="badge decided">Decided</span></div><h3>Services</h3><p>Kontantstrøm, nærhet til problemer og første distribusjon. Kunden kjøper resultat og prosess — ikke verktøystacken.</p><div class="meta">Provenance · master context / messages 25, 31, 37</div></article>
+            <article class="card"><div class="card-top"><span class="card-icon">↗</span><span class="badge proposed">Proposed</span></div><h3>Labs / Studio</h3><p>Små interne verktøy blir testet på tvers av oppdrag. De beste kan modnes til produktkandidater.</p><div class="meta">Provenance · assistant synthesis / messages 31, 37</div></article>
+            <article class="card"><div class="card-top"><span class="card-icon">∞</span><span class="badge proposed">Proposed</span></div><h3>Owned products</h3><p>Software, produktminne og normaliserte forretningsmodeller blir den langsiktige verdien — ikke timeproduksjon alene.</p><div class="meta">Provenance · Jonathan + assistant development / messages 36–39</div></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="architecture">
+        <div class="wrap">
+          <div class="section-head">
+            <div><p class="eyebrow" data-en="04 · Architecture">04 · Arkitektur</p><h2>Access. Understanding. Agency.</h2></div>
+            <p data-en="This is the target architecture — not evidence that these systems have already been built or connected.">Dette er målbildet — ikke dokumentasjon på at systemene allerede er bygget eller koblet til.</p>
+          </div>
+          <div class="stack">
+            <article class="stack-block"><span class="stack-num">LAYER 01</span><h3>Delegate Connect</h3><p data-en="Discovers systems and translates business goals into the capabilities the customer has allowed.">Oppdager systemer og oversetter mål til nødvendige, tillatte kapabiliteter.</p><ul><li>OAuth / access requests</li><li>API + MCP catalogue</li><li>Capability mapping</li><li>Connector builder · future</li></ul></article>
+            <div class="connector">→</div>
+            <article class="stack-block"><span class="stack-num">LAYER 02</span><h3>Delegate Brain</h3><p data-en="Maintains business context, decisions, relationships, evidence and product memory.">Holder forretningskontekst, beslutninger, relasjoner, evidens og produktminne.</p><ul><li>Company brains</li><li>People + capability context</li><li>Work + decision memory</li><li>Sources + provenance</li></ul></article>
+            <div class="connector">→</div>
+            <article class="stack-block"><span class="stack-num">LAYER 03</span><h3>Growth Wizard</h3><p data-en="Finds friction, forms hypotheses and runs safe improvement loops.">Finner friksjon, former hypoteser og driver sikre forbedringssløyfer.</p><ul><li>Observe + understand</li><li>Hypothesis + experiment</li><li>Measure + learn</li><li>Guardrails + approval</li></ul></article>
+          </div>
+          <div class="notice">
+            <div class="notice-icon">↳</div>
+            <p data-en-html="<strong>Architecture principle:</strong> Brain does not mean copying all customer data. It should know what data means, where it lives, which purposes and permissions apply, and only store or retrieve what is necessary. Credentials stay outside the model."><strong>Arkitekturprinsipp:</strong> Brain betyr ikke «kopier alle kundedata». Den bør vite hva data betyr, hvor de finnes, hvilke formål og tilganger som gjelder, og bare lagre eller hente det som er nødvendig. Credentials skal holdes utenfor modellen.</p>
+          </div>
+          <div class="grid-3" style="margin-top:16px">
+            <article class="card"><div class="card-top"><span class="card-icon">CB</span><span class="badge decided">Approved record</span></div><h3>Company Brain</h3><p data-en="Company knowledge, systems, facts, relationships, decisions, strategy and authorised business context — separated by company/tenant.">Selskapskunnskap, systemer, fakta, relasjoner, beslutninger, strategi og autorisert business context — separert per selskap/tenant.</p></article>
+            <article class="card"><div class="card-top"><span class="card-icon">PB</span><span class="badge decided">Restricted layer</span></div><h3>People Brain</h3><p data-en="Skills, learning progress and demonstrated capability from transparent, observable evidence — not covert personality or emotional profiling.">Ferdigheter, læringsprogresjon og demonstrert kapasitet fra transparent, observerbar evidens — ikke skjult personlighet- eller emosjonsprofilering.</p></article>
+            <article class="card"><div class="card-top"><span class="card-icon">WB</span><span class="badge decided">Approved record</span></div><h3>Work Brain</h3><p data-en="Work, processes, outcomes, blockers, dependencies and recurring patterns that connect business needs, people capability and automation opportunities.">Arbeid, prosesser, resultater, blokkere, avhengigheter og gjentakende mønstre som kobler businessbehov, people capability og automatiseringsmuligheter.</p></article>
+          </div>
+          <div class="flowline" aria-label="System of record boundaries">
+            <span>Supabase · approved business knowledge</span><i>→</i><span>ClickUp · tasks and execution</span><i>→</i><span>GitHub · code + agents</span><i>→</i><span>Drive · team files</span><i>→</i><span>Obsidian · Jonathan private/local</span>
+          </div>
+          <div class="notice"><div class="notice-icon">5D</div><p data-en-html="<strong>Permission model:</strong> WHO × WHAT × ACTION × SCOPE × TIME. Access requests can be temporary or permanent, must be approved by the right owner and leave an audit trail. OAuth permission alone is not legal permission to process every category of data."><strong>Permission model:</strong> WHO × WHAT × ACTION × SCOPE × TIME. Tilgang kan være midlertidig eller permanent, må godkjennes av riktig eier og etterlate audit trail. OAuth-tillatelse er ikke i seg selv juridisk tillatelse til å behandle alle datakategorier.</p></div>
+        </div>
+      </section>
+
+      <section id="loops">
+        <div class="wrap">
+          <div class="section-head">
+            <div><p class="eyebrow" data-en="05 · Learning system">05 · Læringssystem</p><h2 data-en="Three loops. One compound effect.">Tre sløyfer. Én compound effect.</h2></div>
+            <p data-en="Every delivery should be able to improve the customer, product and team — without pretending that every lesson automatically generalises.">Hver leveranse skal kunne gjøre kunden, produktet og teamet litt bedre — uten å late som all læring automatisk kan generaliseres.</p>
+          </div>
+          <div class="loops">
+            <article class="loop"><span>Loop 01</span><h3>Customer discovery</h3><p>Problem → levering → evidens → mønster → internt verktøy → produktkandidat.</p></article>
+            <article class="loop"><span>Loop 02</span><h3>Product growth</h3><p>Atferd → friksjon → hypotese → sikkert eksperiment → resultat → produktminne.</p></article>
+            <article class="loop"><span>Loop 03</span><h3>People learning</h3><p>Reell oppgave → kunnskapshull → tilpasset støtte → praksis → vurdering → bedre opplæring.</p></article>
+          </div>
+          <div class="grid-2" style="margin-top:16px">
+            <article class="card"><div class="card-top"><span class="card-icon">GW</span><span class="badge proposed">Proposed</span></div><h3>Growth Wizard loop</h3><p>Observe → detect → understand → hypothesize → approve → test → measure → retain/rollback → learn → repeat.</p><div class="meta">Lavrisikoeksperimenter kan etter hvert automatiseres. Pris, personvern, betaling og større endringer krever godkjenning.</div></article>
+            <article class="card"><div class="card-top"><span class="card-icon">AI</span><span class="badge experiment">Experiment</span></div><h3>Adaptive trainee loop</h3><p>AI lærer ikke en rigid «type» for et menneske. Den måler hvilke forklaringer, øvelser og feedbackformer som faktisk gir bedre prestasjon i ulike oppgaver.</p><div class="meta">«Goethe-intelligens» er Jonathans arbeidsterm, ikke en etablert metode.</div></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="ecosystem">
+        <div class="wrap">
+          <div class="section-head">
+            <div><p class="eyebrow" data-en="06 · Company ecosystem">06 · Selskapsøkosystem</p><h2 data-en="One engine. Multiple contexts.">Én motor. Flere kontekster.</h2></div>
+            <p data-en="Not every name and relationship is verified in the raw history. The cards show what the available sources actually support.">Ikke alle navn og relasjoner er verifisert i råhistorikken. Kortene viser hva kilden faktisk støtter.</p>
+          </div>
+          <div class="grid-3">
+            <article class="card" data-status-card="decided"><div class="card-top"><span class="card-icon">D</span><span class="badge decided">Decided</span></div><h3>Delegate</h3><p>AI-native product studio og operativ læringsmotor mellom Norge og Filippinene.</p><div class="meta">Kilde · master context + workshop</div></article>
+            <article class="card" data-status-card="experiment"><div class="card-top"><span class="card-icon">GP</span><span class="badge experiment">First operating lab</span></div><h3>Global Pouch Distribution Inc. · GPDI</h3><p data-en="One of Delegate's first real customers and operating labs. Distribution, retail, field sales and brand reporting create the foundation for Retail Intelligence.">En av Delegates første reelle kunder og operative laboratorier. Distribusjon, retail, field sales og brand reporting danner grunnlaget for Retail Intelligence.</p><div class="meta" data-en="Recovered later context · exact naming relationship to ‘Global Pouches’ should be confirmed">Recovered later context · eksakt navnerelasjon til «Global Pouches» bør bekreftes</div></article>
+            <article class="card" data-status-card="experiment"><div class="card-top"><span class="card-icon">SF</span><span class="badge experiment">First operating lab</span></div><h3>Smokefree</h3><p data-en="One of Delegate's first real customers and a D2C intelligence/growth lab for SEO, content, campaigns, creative testing, merchandising, CRO, retention and customer behaviour.">En av Delegates første reelle kunder og et D2C intelligence/growth-lab for SEO, innhold, kampanjer, creative testing, merchandising, CRO, retention og kundeatferd.</p><div class="meta" data-en="Recovered later context · business scope still requires discovery">Recovered later context · konkret omfang krever fortsatt discovery</div></article>
+            <article class="card" data-status-card="proposed"><div class="card-top"><span class="card-icon">SYX</span><span class="badge proposed">Financed use case</span></div><h3>SYX Pouches</h3><p data-en="The first financed brand/account/use case inside the GPDI–Smokefree ecosystem. Highly relevant, but not the blocker or automatically the first MVP.">Den første finansierte merkevaren/account/use-casen i GPDI–Smokefree-økosystemet. Svært relevant, men ikke blokkeren eller automatisk første MVP.</p><div class="meta" data-en="Earlier ‘SYX first’ assumption · superseded">Tidligere «SYX først»-antakelse · superseded</div></article>
+          </div>
+          <div class="boundary">
+            <article class="boundary-card private"><span class="badge decided">Separate</span><h3>Jonathan · private / local</h3><p>Obsidian på lokal Mac for personlig kunnskap og privat arbeidsflate. Kan inneholde lokal Delegate-prosjektkontekst, men skal ikke blandes med Delegate sin godkjente forretningskunnskap.</p></article>
+            <article class="boundary-card business"><span class="badge decided">Approved business knowledge</span><h3>Delegate · business brain</h3><p>Egen business-kontekst, tilganger og dokumentert opprinnelse. Supabase er valgt som lagringssted for godkjent Delegate-kunnskap, men denne HTML-en implementerer ikke database, innlogging eller synkronisering.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="people">
+        <div class="wrap">
+          <div class="section-head">
+            <div><p class="eyebrow" data-en="07 · People">07 · Mennesker</p><h2>Build capability, not dependency.</h2></div>
+            <p data-en="These roles are deliberately cautious. Skills assumed in hypothetical examples are not treated as facts.">Rollene under er bevisst forsiktige. Antatte ferdigheter fra hypotetiske eksempler er ikke brukt som fakta.</p>
+          </div>
+          <div class="people-grid">
+            <article class="card person"><div class="initials">JD</div><h3>Jonathan</h3><p class="role" data-en="Direction, AI systems, service and product development.">Retning, AI-systemer, tjeneste- og produktutvikling.</p><span class="badge proposed">Working role</span><div class="meta" data-en="Workshop · preliminary division of roles">Workshop · foreløpig rollefordeling</div></article>
+            <article class="card person"><div class="initials">PA</div><h3>Pat</h3><p class="role" data-en="People/employees, commercial development and nicotine-pouch brand relationships.">Folk/ansatte, kommersiell utvikling og relasjoner til nicotine-pouch-merkevarer.</p><span class="badge proposed">Intended role</span><div class="meta" data-en="Validate with Pat in discovery">Valider med Pat i discovery</div></article>
+            <article class="card person"><div class="initials">JA</div><h3>Janie</h3><p class="role" data-en="Delegate Philippines operations: execution, structure, coordination, work tracking, onboarding, QA, information quality and escalation.">Delegate Philippines operations: execution, struktur, koordinering, arbeidssporing, onboarding, QA, informasjonskvalitet og eskalering.</p><span class="badge proposed">Intended lead</span><div class="meta" data-en="Name directly corrected by Jonathan · validate mandate with Janie">Navn direkte korrigert av Jonathan · valider mandat med Janie</div></article>
+            <article class="card person"><div class="initials">WX</div><h3>WAX</h3><p class="role" data-en="First trainee / existing employee. Establish a real baseline before allocating responsibilities.">Første trainee / eksisterende medarbeider. Faktisk baseline skal måles før oppgavefordeling.</p><span class="badge experiment">Pilot</span><div class="meta" data-en="Confirmed spelling · WAX">Korrekt skrivemåte · WAX</div></article>
+            <article class="card person"><div class="initials">SA</div><h3>Sasa</h3><p class="role" data-en="Graphic design, marketing and campaigns; also part of the first work trial.">Grafisk design, marketing og campaigns; også aktuell i første arbeidsprøve.</p><span class="badge experiment">Pilot</span><div class="meta" data-en="Later correction takes precedence">Senere korrigering har forrang</div></article>
+          </div>
+          <div class="notice"><div class="notice-icon">✓△○</div><p data-en-html="<strong>People Learning evidence:</strong> demonstrated · developing · not demonstrated. Combine self-assessment, manager assessment, adaptive AI assessment and evidence from real work. Sasa's baseline is graphic design, marketing and campaigns; do not turn her into a generic CRM/operations trainee. WAX's path must be discovered rather than assumed."><strong>People Learning-evidens:</strong> demonstrert · under utvikling · ikke demonstrert. Kombiner self-assessment, manager assessment, adaptiv AI-assessment og evidens fra ekte arbeid. Sasa sin baseline er grafisk design, marketing og campaigns; ikke gjør henne til en generisk CRM/operations-trainee. WAX sin retning skal oppdages, ikke antas.</p></div>
+        </div>
+      </section>
+
+      <section id="pilots">
+        <div class="wrap">
+          <div class="section-head">
+            <div><p class="eyebrow" data-en="08 · First operating labs">08 · Første operative labs</p><h2 data-en="Retail intelligence on one side. D2C intelligence on the other.">Retail intelligence på den ene siden. D2C intelligence på den andre.</h2></div>
+            <p data-en="GPDI and Smokefree are the first real customer environments. Together they can create a learning loop from brand and distribution to retail, direct-to-consumer behaviour and back to better brand decisions.">GPDI og Smokefree er de første reelle kundemiljøene. Sammen kan de skape en læringssløyfe fra merkevare og distribusjon til retail, direkte kundeatferd og tilbake til bedre brand-beslutninger.</p>
+          </div>
+          <div class="grid-2">
+            <article class="card"><div class="card-top"><span class="card-icon">RI</span><span class="badge proposed">Product direction</span></div><h3>GPDI Retail Intelligence</h3><p data-en="A potential operating and product layer across retailer CRM, inventory, SKU/flavour/strength performance, sell-through, reorders, logistics, field-sales activity, geography, competitor intelligence, forecasting and brand reporting.">Et mulig operativt produktlag på tvers av retailer CRM, lager, SKU/smak/styrke-performance, sell-through, gjenbestilling, logistikk, field-sales-aktivitet, geografi, konkurrentinnsikt, forecasting og brand reporting.</p><div class="meta" data-en="Lightweight collection · retailer check-ins + salesperson voice notes → structured intelligence">Lett datainnsamling · retailer check-ins + salesperson voice notes → strukturert intelligence</div></article>
+            <article class="card"><div class="card-top"><span class="card-icon">D2C</span><span class="badge proposed">Product direction</span></div><h3>Smokefree D2C Intelligence</h3><p data-en="A growth lab combining SEO, content, campaigns, creative tests, onsite merchandising, CRO, retention, customer behaviour and direct-to-consumer product intelligence.">Et growth-lab som kombinerer SEO, innhold, kampanjer, creative tests, onsite merchandising, CRO, retention, kundeatferd og D2C product intelligence.</p><div class="meta" data-en="Prove with actual commercial metrics — not activity volume">Bevis gjennom faktiske kommersielle måltall — ikke aktivitetsvolum</div></article>
+          </div>
+          <div class="flowline" aria-label="GPDI and Smokefree flywheel">
+            <span>Brand</span><i>→</i><span>GPDI distribution</span><i>→</i><span>Retail + Smokefree D2C</span><i>→</i><span>Unified intelligence</span><i>→</i><span>Restricted brand dashboard</span><i>→</i><span>Better decisions</span>
+          </div>
+          <div class="notice"><div class="notice-icon">SYX</div><p data-en-html="<strong>SYX's correct place:</strong> first financed brand/account/use case inside this ecosystem. A restricted SYX-facing dashboard is a strong candidate, but neither SYX nor GPDI Retail Intelligence has been declared the final MVP. Brand-specific access must not expose other brands or internal GPDI data."><strong>SYX sin riktige plass:</strong> første finansierte merkevare/account/use-case inne i dette økosystemet. Et avgrenset SYX-dashboard er en sterk kandidat, men verken SYX eller GPDI Retail Intelligence er erklært som endelig MVP. Brand-spesifikk tilgang skal ikke eksponere andre merkevarer eller interne GPDI-data.</p></div>
+          <div class="notice"><div class="notice-icon">!</div><p data-en-html="<strong>Commercial/legal open question:</strong> Do not assume every GPDI brand must use Smokefree exclusively. That relationship must be tested strategically, commercially and legally."><strong>Kommersielt/juridisk åpent spørsmål:</strong> Ikke anta at alle GPDI-merkevarer skal bindes eksklusivt til Smokefree. Den relasjonen må testes strategisk, kommersielt og juridisk.</p></div>
+        </div>
+      </section>
+
+      <section id="mvp">
+        <div class="wrap">
+          <div class="section-head">
+            <div><p class="eyebrow" data-en="09 · Phase 1 & MVP pipeline">09 · Fase 1 og MVP-pipeline</p><h2 data-en="Discovery first. Opportunity Engine second. MVP third.">Discovery først. Opportunity Engine deretter. MVP til slutt.</h2></div>
+            <p data-en="The first MVP must emerge from real company discovery, capability evidence and opportunity scoring. Choosing SYX or another product in advance would reverse the intended sequence.">Første MVP skal komme ut av reell company discovery, capability-evidens og opportunity-vurdering. Å velge SYX eller et annet produkt på forhånd ville snu den avtalte rekkefølgen.</p>
+          </div>
+          <div class="roadmap-grid">
+            <article class="roadmap-step"><h3 data-en="Delegate Foundation">Delegate Foundation</h3><p data-en="Purpose, boundaries, systems of record, decision model and source discipline.">Formål, grenser, systems of record, beslutningsmodell og kildedisiplin.</p></article>
+            <article class="roadmap-step"><h3 data-en="Pat + Janie Discovery">Pat + Janie Discovery</h3><p data-en="Validate roles, current work, priorities, bottlenecks and decision rights.">Valider roller, arbeid, prioriteringer, flaskehalser og beslutningsrom.</p></article>
+            <article class="roadmap-step key"><h3 data-en="Smokefree + GPDI Deep Discovery">Smokefree + GPDI Deep Discovery</h3><p data-en="Map businesses, systems, data, workflows, economics and real pain.">Kartlegg virksomheter, systemer, data, workflows, økonomi og reell smerte.</p></article>
+            <article class="roadmap-step"><h3>Company Brains v0</h3><p data-en="Create source-grounded company context with tenant separation.">Bygg kildebasert company context med tenant-separasjon.</p></article>
+            <article class="roadmap-step"><h3 data-en="People capability baseline">People capability baseline</h3><p data-en="Self, manager, adaptive assessment and evidence from real work.">Self-, manager- og adaptiv assessment pluss evidens fra ekte arbeid.</p></article>
+            <article class="roadmap-step"><h3 data-en="AI training foundation">AI training foundation</h3><p data-en="Teach, explain-back, practise and verify — role by role.">Lær, forklar tilbake, øv og verifiser — rolle for rolle.</p></article>
+            <article class="roadmap-step key"><h3>Opportunity Engine</h3><p data-en="Score real problems against value, software, build need, ownership potential and readiness.">Vurder reelle problemer mot verdi, software, build-behov, eierskapspotensial og readiness.</p></article>
+            <article class="roadmap-step key"><h3 data-en="Select first MVP">Velg første MVP</h3><p data-en="Choose only after discovery and scoring — not from intuition alone.">Velg først etter discovery og vurdering — ikke kun ut fra intuisjon.</p></article>
+            <article class="roadmap-step"><h3 data-en="Train through real work">Tren gjennom ekte arbeid</h3><p data-en="Develop WAX and Sasa in the capability the selected MVP actually requires.">Utvikle WAX og Sasa i den kapasiteten valgt MVP faktisk krever.</p></article>
+            <article class="roadmap-step"><h3 data-en="Build / operate MVP">Bygg / operer MVP</h3><p data-en="Deliver with explicit permissions, ownership, QA and approval boundaries.">Lever med eksplisitte permissions, ownership, QA og godkjenningsgrenser.</p></article>
+            <article class="roadmap-step"><h3 data-en="Measure">Mål</h3><p data-en="Business outcome, work efficiency, quality, learning and risk.">Business outcome, arbeidseffektivitet, kvalitet, læring og risiko.</p></article>
+            <article class="roadmap-step"><h3 data-en="Feed the Brain">Tilbakefør til Brain</h3><p data-en="Store evidence, decisions, outcomes and reusable patterns with provenance.">Lagre evidens, beslutninger, resultater og gjenbrukbare mønstre med provenance.</p></article>
+            <article class="roadmap-step key"><h3 data-en="Select next MVP">Velg neste MVP</h3><p data-en="Repeat with better evidence, stronger people capability and reusable assets.">Gjenta med bedre evidens, sterkere people capability og gjenbrukbare assets.</p></article>
+          </div>
+          <div class="grid-2" style="margin-top:16px">
+            <article class="card"><div class="card-top"><span class="card-icon">OE</span><span class="badge decided">Decision framework</span></div><h3>Opportunity Engine</h3><p data-en="Inputs: Company Brain + Delegate capabilities + available software + idea/SaaS bank + team capabilities + cost/difficulty. Output: USE → RESELL → INTEGRATE → BUILD → OWN.">Input: Company Brain + Delegate capabilities + tilgjengelig software + idé/SaaS-bank + team capabilities + kost/vanskelighet. Output: USE → RESELL → INTEGRATE → BUILD → OWN.</p></article>
+            <article class="card"><div class="card-top"><span class="card-icon">?</span><span class="badge open">Final MVP open</span></div><h3 data-en="Strong candidates — not decisions">Sterke kandidater — ikke vedtak</h3><p data-en="GPDI Retail Intelligence / Brand Intelligence, a restricted SYX brand dashboard, or a Smokefree D2C intelligence workflow. Discovery decides which one earns the first build.">GPDI Retail Intelligence / Brand Intelligence, et avgrenset SYX brand-dashboard eller en Smokefree D2C intelligence-workflow. Discovery avgjør hva som fortjener første build.</p></article>
+          </div>
+          <div class="notice"><div class="notice-icon">↺</div><p data-en-html="<strong>North-star loop:</strong> real company problem → measurable result → structured work evidence → stronger people capability → reusable internal asset → next product opportunity."><strong>North-star loop:</strong> reelt selskapsproblem → målbart resultat → strukturert work-evidens → sterkere people capability → gjenbrukbar intern asset → neste produktmulighet.</p></div>
+        </div>
+      </section>
+
+      <section id="portfolio">
+        <div class="wrap">
+          <div class="section-head">
+            <div><p class="eyebrow" data-en="10 · Portfolio">10 · Portefølje</p><h2>Products are earned, not imagined into existence.</h2></div>
+            <p data-en="Filter the portfolio by evidence status. Status here does not represent legal or commercial approval.">Filtrer porteføljen etter evidensstatus. Statusene gjelder denne v0-en, ikke en juridisk eller kommersiell godkjenning.</p>
+          </div>
+          <div class="filter-bar" role="group" aria-label="Filtrer produktstatus">
+            <button class="filter-btn active" data-filter="all" type="button" data-en="All">Alle</button>
+            <button class="filter-btn" data-filter="decided" type="button">Decided</button>
+            <button class="filter-btn" data-filter="proposed" type="button">Proposed</button>
+            <button class="filter-btn" data-filter="experiment" type="button">Experiment</button>
+            <button class="filter-btn" data-filter="open" type="button">Open question</button>
+            <button class="filter-btn" data-filter="superseded" type="button">Superseded</button>
+          </div>
+          <div class="portfolio">
+            <div class="portfolio-row header"><span data-en="Concept">Konsept</span><span>Status</span><span data-en="Role in the system">Rolle i systemet</span><span>Provenance</span></div>
+            <article class="portfolio-row" data-status-card="proposed"><strong>Delegate Connect</strong><span class="badge proposed">Proposed</span><p>Business discovery, capability mapping, permissions og integrasjonsabstraksjon.</p><span class="small muted">Messages 38–39</span></article>
+            <article class="portfolio-row" data-status-card="proposed"><strong>Delegate Brain</strong><span class="badge proposed">Proposed</span><p>Langtidsminne, relasjoner, beslutninger, evidens og strukturert læring.</p><span class="small muted">Messages 37–39, 51–53</span></article>
+            <article class="portfolio-row" data-status-card="proposed"><strong>Growth Wizard</strong><span class="badge proposed">Proposed</span><p>Kontinuerlig produktforbedring gjennom trygge, målbare læringssløyfer.</p><span class="small muted">Messages 32–37</span></article>
+            <article class="portfolio-row" data-status-card="superseded"><strong>Delegate Pulse</strong><span class="badge superseded">Superseded</span><p>Tidligere navn/fokus. Utvidet og omdøpt til Growth Wizard i samtalen.</p><span class="small muted">Messages 9–33</span></article>
+            <article class="portfolio-row" data-status-card="proposed"><strong>GPDI Retail Intelligence</strong><span class="badge proposed">Product direction</span><p data-en="Retail, stock, sell-through, reorders, field sales, geography, competitor, forecast and brand intelligence.">Retail, lager, sell-through, gjenbestilling, field sales, geografi, konkurrent-, forecast- og brand intelligence.</p><span class="small muted">Recovered later context</span></article>
+            <article class="portfolio-row" data-status-card="proposed"><strong>Smokefree D2C Intelligence</strong><span class="badge proposed">Product direction</span><p data-en="SEO, campaigns, creative tests, onsite merchandising, CRO, retention and customer behaviour.">SEO, kampanjer, creative tests, onsite merchandising, CRO, retention og kundeatferd.</p><span class="small muted">Recovered later context</span></article>
+            <article class="portfolio-row" data-status-card="proposed"><strong>Opportunity Engine</strong><span class="badge proposed">Core capability</span><p>Company Brain + capabilities + software + idea bank + cost → USE / RESELL / INTEGRATE / BUILD / OWN.</p><span class="small muted">Recovered later context</span></article>
+            <article class="portfolio-row" data-status-card="superseded"><strong>SYX-first sequence</strong><span class="badge superseded">Superseded</span><p data-en="SYX remains a financed use case and strong candidate, but choosing a SYX task is no longer the prerequisite for starting Delegate.">SYX er fortsatt en finansiert use-case og sterk kandidat, men valg av SYX-oppgave er ikke lenger forutsetningen for å starte Delegate.</p><span class="small muted">Decision history</span></article>
+            <article class="portfolio-row" data-status-card="proposed"><strong>Master Integration Builder Agent</strong><span class="badge proposed">Proposed</span><p>Kan lese API-docs, generere connector/MCP-tools, teste og sende til QA + human approval.</p><span class="small muted">Message 39</span></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="principles">
+        <div class="wrap">
+          <div class="section-head">
+            <div><p class="eyebrow" data-en="11 · Operating principles">11 · Operating principles</p><h2>Guardrails before autonomy.</h2></div>
+            <p data-en="These are product and architecture principles — not a completed legal, security or regulatory assessment.">Dette er produkt- og arkitekturprinsipper. De er ikke en ferdig juridisk, sikkerhetsmessig eller regulatorisk vurdering.</p>
+          </div>
+          <div class="rules">
+            <article class="card rule"><span class="badge decided">Decided principle</span><h3 style="margin-top:28px">Minimum necessary access</h3><p data-en="Ask for purpose and capability — not blanket access. Retrieve and store as little personal data as possible.">Be om formål og kapabilitet — ikke blanket access. Hent og lagre minst mulig persondata.</p></article>
+            <article class="card rule"><span class="badge decided">Decided principle</span><h3 style="margin-top:28px">Credentials outside the model</h3><p data-en="OAuth, tokens and secrets belong in a separate secure layer with clear revocation and audit controls.">OAuth, tokens og secrets håndteres i et eget sikkert lag med tydelig tilbakekalling og audit.</p></article>
+            <article class="card rule"><span class="badge decided">Decided principle</span><h3 style="margin-top:28px">Human approval for material risk</h3><p data-en="Pricing, refunds, customer contact, payments, privacy and major product changes require an explicit mandate.">Pris, refusjon, kundekontakt, betaling, personvern og større produktendringer krever eksplisitt mandat.</p></article>
+            <article class="card rule"><span class="badge decided">Decided principle</span><h3 style="margin-top:28px">Provenance or it did not happen</h3><p>Påstander, beslutninger og læring skal kunne spores til kilde, dato, rolle og evidenstype.</p></article>
+            <article class="card rule"><span class="badge proposed">Product rule</span><h3 style="margin-top:28px">Why AI?</h3><p>Et produkt må kunne forklare hva kontekst, syntese, adaptiv handling eller kontinuerlig læring gjør mulig.</p></article>
+            <article class="card rule"><span class="badge proposed">Product rule</span><h3 style="margin-top:28px">ClickUp is for tasks, not business memory</h3><p>ClickUp kan brukes til oppgaver og gjennomføring. Godkjent forretningskunnskap lagres i Delegate Brain.</p></article>
+            <article class="card rule"><span class="badge open">Legal workstream</span><h3 style="margin-top:28px">Architecture ≠ legal sign-off</h3><p data-en="Tenant separation, minimisation and permissions establish a direction — but cross-border customer and employee data still requires PH/Norway privacy governance, agreements and appropriate legal/DPO review.">Tenant-separasjon, dataminimering og permissions etablerer retning — men grenseoverskridende kunde- og ansattdata krever fortsatt PH/Norge-governance, avtaler og relevant juridisk/DPO-gjennomgang.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="provisioning">
+        <div class="wrap">
+          <div class="section-head">
+            <div><p class="eyebrow" data-en="12 · Provisioning & identity">12 · Provisjonering og identitet</p><h2 data-en="The customer owns the account. Delegate gets delegated access.">Kunden eier kontoen. Delegate får delegert tilgang.</h2></div>
+            <p data-en="Checked directly against provider terms 30.09.2026 — not assumed from a chat.">Sjekket direkte mot leverandørvilkår 30.09.2026 — ikke antatt fra en samtale.</p>
+          </div>
+          <div class="flowline" aria-label="Identity flow">
+            <span data-en="Customer creates/owns the account">Kunde oppretter/eier kontoen</span><i>→</i><span data-en="Delegate: collaborator / member (scoped)">Delegate: collaborator/medlem (scoped)</span><i>→</i><span data-en="Delegate Agent: API access on the same customer-owned account">Delegate Agent: API-tilgang på samme kundeeide konto</span>
+          </div>
+          <div class="grid-3" style="margin-top:16px">
+            <article class="card"><div class="card-top"><span class="card-icon">SH</span><span class="badge decided">Verified OK</span></div><h3>Shopify</h3><p data-en="Collaborator access is explicitly designed for agencies across multiple unrelated stores — each owner approves separately, no password sharing.">Collaborator-tilgang er eksplisitt designet for byråer på tvers av flere urelaterte butikker — hver eier godkjenner separat, ingen passord deles.</p></article>
+            <article class="card"><div class="card-top"><span class="card-icon">PH</span><span class="badge open">Blocked as designed</span></div><h3>PostHog</h3><p data-en="Cloud License Terms explicitly ban service-bureau / reselling use and multiple licenses under one org without written permission. One shared Delegate org per customer project breaks this.">Cloud License Terms forbyr eksplisitt service-bureau-/reselling-bruk og flere lisenser under én org uten skriftlig tillatelse. Én delt Delegate-org med kundeprosjekt bryter dette.</p></article>
+            <article class="card"><div class="card-top"><span class="card-icon">KL</span><span class="badge proposed">Likely OK</span></div><h3>Klaviyo</h3><p data-en="No ToS conflict found for a scoped private API key per customer. Long-term: become a tech partner and build OAuth for a real 'Connect Klaviyo' flow.">Ingen ToS-konflikt funnet for en scoped private API-nøkkel per kunde. Langsiktig: bli tech-partner og bygg OAuth for en ekte «Connect Klaviyo»-flyt.</p></article>
+          </div>
+          <div class="notice"><div class="notice-icon">!</div><p data-en-html="<strong>Correction:</strong> the originally proposed pattern — one Delegate-owned PostHog organisation with a project per customer — is not allowed by PostHog's own license terms. Each customer must own its own PostHog org; Delegate gets membership in it."><strong>Korrigert:</strong> det opprinnelig foreslåtte mønsteret — én Delegate-eid PostHog-organisasjon med ett prosjekt per kunde — er ikke tillatt av PostHog sine egne lisensvilkår. Hver kunde må eie sin egen PostHog-org; Delegate får medlemskap i den.</p></div>
+        </div>
+      </section>
+
+      <section id="orchestration">
+        <div class="wrap">
+          <div class="section-head">
+            <div><p class="eyebrow" data-en="13 · Orchestration layer">13 · Orkestreringslag</p><h2 data-en="The customer buys Delegate — not the tool stack.">Kunden kjøper Delegate — ikke verktøystacken.</h2></div>
+            <p data-en="Not a pivot — a sharpening of the existing Orchestrate → Learn → Build → Own model in section 03.">Ikke en ny retning — en presisering av Orchestrate → Learn → Build → Own-modellen i seksjon 03.</p>
+          </div>
+          <div class="grid-3">
+            <article class="card"><div class="card-top"><span class="card-icon">B</span></div><h3 data-en="Brain">Brain</h3><p data-en="A living understanding of the business.">En levende forståelse av selskapet.</p></article>
+            <article class="card"><div class="card-top"><span class="card-icon">A</span></div><h3 data-en="Agents">Agents</h3><p data-en="Continuous monitoring and improvement loops.">Kontinuerlig overvåkning og forbedringsloop.</p></article>
+            <article class="card"><div class="card-top"><span class="card-icon">H</span></div><h3 data-en="Humans">Mennesker</h3><p data-en="Philippines team execution where AI is not enough.">Filippinene-teamets utførelse der AI ikke strekker til.</p></article>
+          </div>
+          <div class="flowline" aria-label="Underlying stack"><span data-en="↓ built on, not locked to ↓">↓ bygget på, ikke bundet til ↓</span></div>
+          <div class="grid-3" style="margin-top:8px">
+            <article class="card"><div class="card-top"><span class="badge proposed">Swappable today</span></div><h3>Shopify · Klaviyo · PostHog · ClickUp</h3><p data-en="Interchangeable dependencies under Delegate, not the product itself — matches the existing Resell → Build → Own loop.">Utskiftbare avhengigheter under Delegate, ikke selve produktet — matcher eksisterende Resell → Build → Own-loop.</p></article>
+          </div>
+          <div class="notice"><div class="notice-icon">↳</div><p data-en-html="<strong>Pricing sketch, not decided:</strong> implementation fee or 12-month minimum (funds setup without holding the customer's accounts hostage) + fixed monthly Delegate fee + third-party licences billed separately where the provider allows it. Commercial/legal, not settled here."><strong>Prisskisse, ikke besluttet:</strong> implementation fee eller 12-måneders minimum (finansierer oppsett uten å holde kundens kontoer som gissel) + fast månedlig Delegate-avgift + tredjepartslisenser fakturert separat der leverandøren tillater det. Kommersielt/juridisk, ikke avgjort her.</p></div>
+        </div>
+      </section>
+
+      <section id="agents">
+        <div class="wrap">
+          <div class="section-head">
+            <div><p class="eyebrow" data-en="14 · Agent architecture">14 · Agent-arkitektur</p><h2 data-en="Few agents. Many skills. One shared Brain.">Få agenter. Mange skills. Felles Brain.</h2></div>
+            <p data-en="Proposed phase 1 set — not decided. Deliberately not an 'agent zoo'.">Foreslått fase 1-sett — ikke besluttet. Bevisst ikke en «agent zoo».</p>
+          </div>
+          <div class="grid-3">
+            <article class="card"><div class="card-top"><span class="badge proposed">Proposed</span></div><h3>Orchestrator</h3><p data-en="Routes to the right skill/agent.">Velger riktig skill/agent.</p></article>
+            <article class="card"><div class="card-top"><span class="badge proposed">Proposed</span></div><h3 data-en="Business Intelligence">Business Intelligence</h3><p data-en="Shopify/PostHog/Klaviyo + Brain → weekly status and deviations.">Shopify/PostHog/Klaviyo + Brain → ukentlig status og avvik.</p></article>
+            <article class="card"><div class="card-top"><span class="badge proposed">Proposed</span></div><h3 data-en="Growth">Growth</h3><p data-en="CRO, campaigns, retention, hypotheses.">CRO, kampanjer, retention, hypoteser.</p></article>
+            <article class="card"><div class="card-top"><span class="badge proposed">Proposed</span></div><h3>Web / QA</h3><p data-en="Site checks, mobile QA, technical issues.">Website-sjekk, mobil-QA, tekniske feil.</p></article>
+            <article class="card"><div class="card-top"><span class="badge proposed">Proposed</span></div><h3 data-en="Work">Work</h3><p data-en="Creates and follows up tasks.">Oppretter og følger opp tasks.</p></article>
+            <article class="card"><div class="card-top"><span class="badge proposed">Proposed</span></div><h3 data-en="Learning Coach">Learning Coach</h3><p data-en="Helps Wax/Sasa through tasks with rubrics.">Hjelper Wax/Sasa gjennom oppgaver med rubrics.</p></article>
+          </div>
+          <div class="strategy-line">
+            <article class="phase"><span class="step" data-en="LOW RISK">LAV RISIKO</span><h3 data-en="Cheap model">Billig modell</h3><p data-en="Formatting, summarising.">Formatering, oppsummering.</p></article>
+            <article class="phase"><span class="step" data-en="MEDIUM RISK">MEDIUM RISIKO</span><h3 data-en="Stronger model">Sterkere modell</h3><p data-en="Campaign analysis, QA interpretation.">Kampanjeanalyse, QA-tolkning.</p></article>
+            <article class="phase"><span class="step" data-en="HIGH RISK">HØY RISIKO</span><h3 data-en="Strongest + critic">Sterkeste + kritiker</h3><p data-en="Second-pass critique before action.">Second-pass kritikk før handling.</p></article>
+            <article class="phase"><span class="step" data-en="CRITICAL">KRITISK</span><h3 data-en="+ human approval">+ menneskelig godkjenning</h3><p data-en="Pricing, architecture, privacy, finance.">Prisendringer, arkitektur, personvern, finans.</p></article>
+          </div>
+          <div class="notice"><div class="notice-icon">%</div><p data-en-html="<strong>Confidence layer:</strong> every AI observation carries evidence level, confidence and business impact. Low-risk findings can auto-create tasks; high-risk ones always require human approval."><strong>Confidence-lag:</strong> hver AI-observasjon får evidensnivå, confidence og business impact. Lavrisiko kan auto-opprette tasks; høyrisiko krever alltid menneskelig godkjenning.</p></div>
+        </div>
+      </section>
+
+      <section id="execution">
+        <div class="wrap">
+          <div class="section-head">
+            <div><p class="eyebrow" data-en="15 · Execution model & phase 1 tasks">15 · Utførelsesmodell og fase 1-oppgaver</p><h2 data-en="Humans on Claude Team. Machines on the API.">Mennesker på Claude Team. Maskiner på API.</h2></div>
+            <p data-en="Tasks are live in ClickUp — list 'Fase 1 - Oppgavefordeling (uke 1-2)'.">Oppgavene ligger i ClickUp — liste «Fase 1 - Oppgavefordeling (uke 1-2)».</p>
+          </div>
+          <div class="grid-2">
+            <article class="card"><div class="card-top"><span class="card-icon">C</span></div><h3 data-en="Humans → Claude Team">Mennesker → Claude Team</h3><p data-en="Org instructions (short constitution) + org-provisioned Skills, shared across the team.">Org-instruksjoner (kort grunnlov) + org-provisjonerte Skills, delt på tvers av teamet.</p></article>
+            <article class="card"><div class="card-top"><span class="card-icon">A</span></div><h3 data-en="Machines → API">Maskiner → API</h3><p data-en="Own agent runtime: deterministic model choice, permissions, logging, retries, approval gates.">Egen agent-runtime: deterministisk modellvalg, permissions, logging, retries, godkjenningsgrenser.</p></article>
+          </div>
+          <div class="grid-3" style="margin-top:16px">
+            <article class="card"><div class="card-top"><span class="card-icon">JD</span></div><h3>Jonathan</h3><p data-en="Build track: Brain, Claude org, ClickUp, first API agent.">Build-spor: Brain, Claude-org, ClickUp, første API-agent.</p></article>
+            <article class="card"><div class="card-top"><span class="card-icon">JA</span></div><h3>Janie</h3><p data-en="AI onboarding, leads Discovery with Pat + GPDI.">AI-onboarding, leder Discovery med Pat + GPDI.</p></article>
+            <article class="card"><div class="card-top"><span class="card-icon">PA</span></div><h3>Pat</h3><p data-en="Operational mapping, pain log, SYX brand case.">Operasjonell kartlegging, pain log, SYX brand case.</p></article>
+            <article class="card"><div class="card-top"><span class="card-icon">WX</span></div><h3>Wax</h3><p data-en="AI baseline, first real task (PostHog), SOP.">AI-baseline, første reelle oppdrag (PostHog), SOP.</p></article>
+            <article class="card"><div class="card-top"><span class="card-icon">SA</span></div><h3>Sasa</h3><p data-en="Marketing baseline, Smokefree audit, campaign hypothesis.">Markedsførings-baseline, Smokefree-audit, kampanjehypotese.</p></article>
+          </div>
+          <div class="notice"><div class="notice-icon">→</div><p data-en-html="<strong>MVP test:</strong> can Brain + AI + existing tools + the team find ONE real problem in Smokefree or GPDI, turn it into work, execute it, measure it and learn from it? Sequence: Delegate = Customer Zero → Smokefree Growth Loop #001 → GPDI Intelligence Loop #001."><strong>MVP-test:</strong> kan Brain + AI + eksisterende verktøy + teamet finne ETT ekte problem i Smokefree eller GPDI, omsette det til arbeid, utføre det, måle det og lære av det? Rekkefølge: Delegate = Customer Zero → Smokefree Growth Loop #001 → GPDI Intelligence Loop #001.</p></div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="wrap"><span>Delegate Blueprint v0 · static HTML · no live systems connected</span><span>Working document, not the approved database record</span></div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const languageButtons = [...document.querySelectorAll('[data-language]')];
+    const translatable = [...document.querySelectorAll('[data-en], [data-en-html]')];
+    translatable.forEach(element => element.dataset.noHtml = element.innerHTML);
+
+    function setLanguage(language) {
+      const english = language === 'en';
+      document.documentElement.lang = english ? 'en' : 'no';
+      document.title = english ? 'Delegate Blueprint v0 — English' : 'Delegate Blueprint v0';
+      translatable.forEach(element => {
+        if (!english) {
+          element.innerHTML = element.dataset.noHtml;
+        } else if (element.dataset.enHtml) {
+          element.innerHTML = element.dataset.enHtml;
+        } else {
+          element.textContent = element.dataset.en;
+        }
+      });
+      languageButtons.forEach(button => {
+        const active = button.dataset.language === language;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', String(active));
+      });
+      try { localStorage.setItem('delegate-blueprint-language', language); } catch (_) {}
+    }
+
+    languageButtons.forEach(button => button.addEventListener('click', () => setLanguage(button.dataset.language)));
+    let initialLanguage = 'no';
+    try { initialLanguage = localStorage.getItem('delegate-blueprint-language') || 'no'; } catch (_) {}
+    setLanguage(initialLanguage === 'en' ? 'en' : 'no');
+
+    const filterButtons = [...document.querySelectorAll('[data-filter]')];
+    const statusCards = [...document.querySelectorAll('[data-status-card]')];
+    filterButtons.forEach(button => button.addEventListener('click', () => {
+      filterButtons.forEach(item => item.classList.remove('active'));
+      button.classList.add('active');
+      const filter = button.dataset.filter;
+      statusCards.forEach(card => card.classList.toggle('hidden', filter !== 'all' && card.dataset.statusCard !== filter));
+    }));
+
+    const sections = [...document.querySelectorAll('main section[id]')];
+    const navLinks = [...document.querySelectorAll('.nav a')];
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + visible.target.id));
+    }, { rootMargin: '-20% 0px -65%', threshold: [0, .2, .6] });
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>
